@@ -12,19 +12,17 @@
     <title>The News Paper - News & Lifestyle Magazine Template</title>
     
     <!-- Favicon -->
-    <link rel="icon" href="img/core-img/favicon.ico">
+    <%- include('partials/favIcon.ejs')%>
 
     <!-- Core Stylesheet -->
-    <link rel="stylesheet" href="style.css">
+    <%- include('partials/stylesheets.ejs')%>
 
 </head>
 
 <body>
     <!-- ##### Header Area Start ##### -->
     <header class="header-area">
-
     <%- include('partials/headerContent.ejs') %>
-   
     </header>
     <!-- ##### Header Area End ##### -->
 
@@ -66,17 +64,7 @@
     </footer>
     <!-- ##### Footer Area Start ##### -->
 
-    <!-- ##### All Javascript Files ##### -->
-    <!-- jQuery-2.2.4 js -->
-    <script src="js/jquery/jquery-2.2.4.min.js"></script>
-    <!-- Popper js -->
-    <script src="js/bootstrap/popper.min.js"></script>
-    <!-- Bootstrap js -->
-    <script src="js/bootstrap/bootstrap.min.js"></script>
-    <!-- All Plugins js -->
-    <script src="js/plugins/plugins.js"></script>
-    <!-- Active js -->
-    <script src="js/active.js"></script>
+    <%- include('partials/scripts.ejs')%>
 </body>
 
 </html>
