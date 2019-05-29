@@ -4,6 +4,7 @@
     <%if(typeof latestPostWidgetData != 'undefined'){   %>
     <% latestPostWidgetData.forEach((postData)=>{
         let d = new Date(postData.dateTime); %>
+        
 
     <!-- Single Featured Post -->
     <div class="single-blog-post small-featured-post d-flex">
@@ -16,7 +17,7 @@
                 <a href="#" class="post-title">
                     <h6><%= postData.textContent %></h6>
                 </a>
-                <p class="post-date"><span><%= d.getUTCHours() %></span> | <span><%= d.getDate() %> <%= d.getMonth()+1 %></span></p>
+                <p class="post-date"><span><%= d.getHours() %></span> | <span> <%= d.getDate() %>/<%= d.getMonth()+1 %></span></p>
             </div>
         </div>
     </div>
