@@ -1,6 +1,6 @@
 module.exports = (app) => {
 
-   latestPostWidget =  [
+  const latestPostWidget =  [
             {
                "title": "Finances",
                "image": "19.jpg",
@@ -38,7 +38,7 @@ module.exports = (app) => {
                "dateTime": "April 14, 2019, 07:00:00"
             },
          ]
-   newsSinglePost = [
+  const newsSinglePost = [
             {
                "image":"12.jpg",
                "title":"Finance",
@@ -50,25 +50,41 @@ module.exports = (app) => {
             }
 
          ]
-   
+  const newsWidget = [
+      {
+         "newsWidgetDate":"April 14, 2018"
+      },
+      {
+         "newsWidgetDate":"April 14, 2018"
+      },
+      {
+         "newsWidgetDate":"April 14, 2018"
+      },
+      {
+         "newsWidgetDate":"April 14, 2018"
+      },
+]
 
    app.get('/', (req, res, next) => {
       
       res.render('home', {
         "latestPostWidgetData":latestPostWidget,
-        "newsSinglePostData":newsSinglePost
+        "newsSinglePostData":newsSinglePost,
+        "newsWidgetData":newsWidget
       });
    });
 
    app.get('/categories', (req, res, next) => {
       res.render('categories', {
-         "latestPostWidgetData":latestPostWidget
+         "latestPostWidgetData":latestPostWidget,
+         "newsWidgetData":newsWidget
       });
    });
 
    app.get('/single-article', (req, res, next) => {
       res.render('single-article', {
-         "latestPostWidgetData":latestPostWidget
+         "latestPostWidgetData":latestPostWidget,
+         "newsWidgetData":newsWidget
       });
    });
 

@@ -1,7 +1,7 @@
 <!-- Latest Posts Widget -->
 <div class="latest-posts-widget mb-50">
 
-    <%if(typeof latestPostWidgetData != 'undefined'){   %>
+    <%if(typeof latestPostWidgetData != 'undefined'){  %>
     <% latestPostWidgetData.forEach((postData)=>{
         let d = new Date(postData.dateTime); %>
         
@@ -17,7 +17,7 @@
                 <a href="#" class="post-title">
                     <h6><%= postData.textContent %></h6>
                 </a>
-                <p class="post-date"><span><%= dateAndTime.format(d,'hh:mm A') %></span> | <span> <%=  %><%= dateAndTime.format(d, 'MMMM DD')  %></span></p>
+                <p class="post-date"><span><%= dateAndTime.format(d,'hh:mm A | MMMM DD') %></span></p>
             </div>
         </div>
     </div>
