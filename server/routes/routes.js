@@ -103,6 +103,14 @@ module.exports = (app) => {
         "image":"video3.jpg",
         "videoLink":"https://www.youtube.com/watch?v=sFYo2-KUeTA"
      },
+     {
+        "image":"16.jpg",
+        "videoLink":"https://www.youtube.com/watch?v=Dd7FixvoKBw"
+     },
+     {
+        "image":"17.jpg",
+        "videoLink":"https://www.youtube.com/watch?v=WLAq3JVJ6Ho"
+     },
   ]
 
    app.get('/', (req, res, next) => {
