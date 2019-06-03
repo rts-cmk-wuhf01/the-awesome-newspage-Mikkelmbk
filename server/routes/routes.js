@@ -47,8 +47,34 @@ module.exports = (app) => {
                "chatImage":"chat.png",
                "likeCount":"392",
                "chatCount":"10"
-            }
-
+            },
+            {
+               "image":"13.jpg",
+               "title":"Finance",
+               "textContent":"Dolor sit amet, consectetur adipiscing elit. Nam eu metus sit amet",
+               "likeImage":"like.png",
+               "chatImage":"chat.png",
+               "likeCount":"392",
+               "chatCount":"10"
+            },
+            {
+               "image":"14.jpg",
+               "title":"Finance",
+               "textContent":"Dolor sit amet, consectetur adipiscing elit. Nam eu metus sit amet",
+               "likeImage":"like.png",
+               "chatImage":"chat.png",
+               "likeCount":"392",
+               "chatCount":"10"
+            },
+            {
+               "image":"15.jpg",
+               "title":"Finance",
+               "textContent":"Dolor sit amet, consectetur adipiscing elit. Nam eu metus sit amet",
+               "likeImage":"like.png",
+               "chatImage":"chat.png",
+               "likeCount":"392",
+               "chatCount":"10"
+            },
          ]
   const newsWidget = [
       {
