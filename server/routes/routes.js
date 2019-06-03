@@ -90,13 +90,28 @@ module.exports = (app) => {
          "newsWidgetDate":"April 14, 2018"
       },
 ]
+  const videoContent = [
+     {
+        "image":"video1.jpg",
+        "videoLink":"https://www.youtube.com/watch?v=8u1eyw9p1hg"
+     },
+     {
+        "image":"video2.jpg",
+        "videoLink":"https://www.youtube.com/watch?v=1wiz0UsBPac"
+     },
+     {
+        "image":"video3.jpg",
+        "videoLink":"https://www.youtube.com/watch?v=sFYo2-KUeTA"
+     },
+  ]
 
    app.get('/', (req, res, next) => {
       
       res.render('home', {
         "latestPostWidgetData":latestPostWidget,
         "newsSinglePostData":newsSinglePost,
-        "newsWidgetData":newsWidget
+        "newsWidgetData":newsWidget,
+        "videoData":videoContent
       });
    });
 
