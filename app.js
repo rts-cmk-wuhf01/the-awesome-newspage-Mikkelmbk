@@ -23,6 +23,13 @@ app.set('views', './server/views');
 
 
 
+// laver dateAndTime og placere det i objektet locals som allerede ligger i aps
+app.locals.dateAndTime = require('date-and-time');
+app.locals.dateAndTime.setLocales('en', {
+   'A': ['AM', 'PM']
+});
+
+
 /* indlæs alle de routes serveren skal håndtere
  * dette sker igennem en ny fil, for at splitte koden op i smartere blokke */
 require('./server/routes/routes.js')(app);

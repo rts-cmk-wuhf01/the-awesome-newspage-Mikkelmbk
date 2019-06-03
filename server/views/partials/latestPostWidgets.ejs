@@ -17,7 +17,7 @@
                 <a href="#" class="post-title">
                     <h6><%= postData.textContent %></h6>
                 </a>
-                <p class="post-date"><span><%= d.getHours() %></span> | <span> <%= d.getDate() %>/<%= d.getMonth()+1 %></span></p>
+                <p class="post-date"><span><%= dateAndTime.format(d,'hh:mm A') %></span> | <span> <%=  %><%= dateAndTime.format(d, 'MMMM DD')  %></span></p>
             </div>
         </div>
     </div>
