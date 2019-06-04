@@ -1,8 +1,9 @@
-<div class="popular-news-widget mb-30">
+
+    <%if(typeof newsWidgetData != 'undefined'){  %>
+    <div class="popular-news-widget mb-30">
     <h3>4 Most Popular News</h3>
 
     <!-- Single Popular Blog -->
-    <%if(typeof newsWidgetData != 'undefined'){  %>
     <% newsWidgetData.forEach((WidgetData, index)=>{
     let d = new Date(WidgetData.newsWidgetDate); %>
         <div class="single-popular-post">
@@ -13,9 +14,8 @@
                 <p><%= dateAndTime.format(d,'MMMM DD YYYY')%></p>
             </div>
     <%  }) %>
-    
+    </div>
     <% }%>
     
 
   
-</div>

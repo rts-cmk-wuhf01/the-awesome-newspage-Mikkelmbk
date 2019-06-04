@@ -1,6 +1,6 @@
 module.exports = (app) => {
 
-  const latestPostWidget =  [
+const latestPostWidget =  [
             {
                "title": "Finances",
                "image": "19.jpg",
@@ -38,7 +38,7 @@ module.exports = (app) => {
                "dateTime": "April 14, 2019, 07:00:00"
             },
          ]
-  const newsSinglePost = [
+const newsSinglePost = [
             {
                "image":"12.jpg",
                "title":"Finance",
@@ -76,7 +76,7 @@ module.exports = (app) => {
                "chatCount":"10"
             },
          ]
-  const newsWidget = [
+const newsWidget = [
       {
          "newsWidgetDate":"April 14, 2018"
       },
@@ -90,7 +90,7 @@ module.exports = (app) => {
          "newsWidgetDate":"April 14, 2018"
       },
 ]
-  const videoContent = [
+const videoContent = [
      {
         "image":"video1.jpg",
         "videoLink":"https://www.youtube.com/watch?v=8u1eyw9p1hg"
@@ -112,14 +112,46 @@ module.exports = (app) => {
         "videoLink":"https://www.youtube.com/watch?v=WLAq3JVJ6Ho"
      },
   ]
-
+const editorialMainPost = [
+   {
+      "image":"1.jpg",
+      "textContent":"Orci varius natoque penatibus et magnis dis parturient montes.",
+      "date":"February 11, 2018"
+   },
+   {
+      "image":"2.jpg",
+      "textContent":"Orci varius natoque penatibus et magnis dis parturient montes.",
+      "date":"February 11, 2018"
+   },
+   {
+      "image":"3.jpg",
+      "textContent":"Orci varius natoque penatibus et magnis dis parturient montes.",
+      "date":"February 11, 2018"
+   },
+   {
+      "image":"4.jpg",
+      "textContent":"Orci varius natoque penatibus et magnis dis parturient montes.",
+      "date":"February 11, 2018"
+   },
+   {
+      "image":"5.jpg",
+      "textContent":"Orci varius natoque penatibus et magnis dis parturient montes.",
+      "date":"February 11, 2018"
+   },
+   {
+      "image":"6.jpg",
+      "textContent":"Orci varius natoque penatibus et magnis dis parturient montes.",
+      "date":"February 11, 2018"
+   }
+]
    app.get('/', (req, res, next) => {
       
       res.render('home', {
         "latestPostWidgetData":latestPostWidget,
         "newsSinglePostData":newsSinglePost,
         "newsWidgetData":newsWidget,
-        "videoData":videoContent
+        "videoData":videoContent,
+        "editorialMainPostData":editorialMainPost
       });
    });
 
