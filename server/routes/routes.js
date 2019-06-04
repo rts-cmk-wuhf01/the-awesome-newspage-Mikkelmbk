@@ -222,6 +222,12 @@ const singleArticleCommentArea = [
       "commentText":"Donec turpis erat, scelerisque id euismod sit amet, fermentum vel dolor. Nulla facilisi. Sed"
    },
    {
+      "author":"A-aron",
+      "image":"30.jpg",
+      "date":"April 15, 2018",
+      "commentText":"Donec turpis erat, scelerisque id euismod sit amet, fermentum vel dolor. Nulla facilisi. Sed"
+   },
+   {
       "author":"B-LAKE",
       "image":"31.jpg",
       "date":"April 15, 2018",
