@@ -144,6 +144,38 @@ const editorialMainPost = [
       "date":"February 11, 2018"
    }
 ]
+const editorialSinglePost = [
+   {
+      "image":"7.jpg",
+      "textContent":"Orci varius natoque penatibus et magnis dis parturient montes.",
+      "date":"February 11, 2018"
+   },
+   {
+      "image":"8.jpg",
+      "textContent":"Orci varius natoque penatibus et magnis dis parturient montes.",
+      "date":"February 11, 2018"
+   },
+   {
+      "image":"9.jpg",
+      "textContent":"Orci varius natoque penatibus et magnis dis parturient montes.",
+      "date":"February 11, 2018"
+   },
+   {
+      "image":"10.jpg",
+      "textContent":"Orci varius natoque penatibus et magnis dis parturient montes.",
+      "date":"February 11, 2018"
+   },
+   {
+      "image":"11.jpg",
+      "textContent":"Orci varius natoque penatibus et magnis dis parturient montes.",
+      "date":"February 11, 2018"
+   },
+   {
+      "image":"12.jpg",
+      "textContent":"Orci varius natoque penatibus et magnis dis parturient montes.",
+      "date":"February 11, 2018"
+   }
+]
    app.get('/', (req, res, next) => {
       
       res.render('home', {
@@ -151,7 +183,8 @@ const editorialMainPost = [
         "newsSinglePostData":newsSinglePost,
         "newsWidgetData":newsWidget,
         "videoData":videoContent,
-        "editorialMainPostData":editorialMainPost
+        "editorialMainPostData":editorialMainPost,
+        "editorialSinglePostData":editorialSinglePost
       });
    });
 
