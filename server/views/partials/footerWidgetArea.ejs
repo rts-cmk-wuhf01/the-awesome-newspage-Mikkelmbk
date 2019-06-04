@@ -6,11 +6,14 @@
                                 <a href="/"><img src="img/core-img/logo.png" alt=""></a>
                             </div>
                             <!-- List -->
+                            <%if(typeof footerContactWidgetData != 'undefined'){  %>
                             <ul class="list">
-                                <li><a href="mailto:contact@youremail.com">contact@youremail.com</a></li>
-                                <li><a href="tel:+4352782883884">+43 5278 2883 884</a></li>
-                                <li><a href="http://yoursitename.com">www.yoursitename.com</a></li>
+                                <li><a href="mailto:contact@youremail.com"><%=footerContactWidgetData.mail%></a></li>
+                                <li><a href="tel:+4352782883884"><%=footerContactWidgetData.phone%></a></li>
+                                <li><a href="http://yoursitename.com"><%=footerContactWidgetData.website%></a></li>
                             </ul>
+                             
+                            <% } %>
                         </div>
                     </div>
 
@@ -18,14 +21,16 @@
                     <div class="col-12 col-sm-6 col-lg-2">
                         <div class="footer-widget-area mt-80">
                             <!-- Title -->
-                            <h4 class="widget-title">Politics</h4>
+                            <%if(typeof footerPoliticsWidgetData != 'undefined'){  %>
+                            <h4 class="widget-title"><%=footerPoliticsWidgetData.title%></h4>
                             <!-- List -->
                             <ul class="list">
-                                <li><a href="#">Business</a></li>
-                                <li><a href="#">Markets</a></li>
-                                <li><a href="#">Tech</a></li>
-                                <li><a href="#">Luxury</a></li>
+                                <li><a href="#"><%=footerPoliticsWidgetData.business%></a></li>
+                                <li><a href="#"><%=footerPoliticsWidgetData.markets%></a></li>
+                                <li><a href="#"><%=footerPoliticsWidgetData.tech%></a></li>
+                                <li><a href="#"><%=footerPoliticsWidgetData.luxury%></a></li>
                             </ul>
+                            <% } %>
                         </div>
                     </div>
 
@@ -33,18 +38,20 @@
                     <div class="col-12 col-sm-4 col-lg-2">
                         <div class="footer-widget-area mt-80">
                             <!-- Title -->
-                            <h4 class="widget-title">Featured</h4>
+                            <%if(typeof footerFeaturedWidgetData != 'undefined'){  %>
+                            <h4 class="widget-title"><%=footerFeaturedWidgetData.title%></h4>
                             <!-- List -->
                             <ul class="list">
-                                <li><a href="#">Football</a></li>
-                                <li><a href="#">Golf</a></li>
-                                <li><a href="#">Tennis</a></li>
-                                <li><a href="#">Motorsport</a></li>
-                                <li><a href="#">Horseracing</a></li>
-                                <li><a href="#">Equestrian</a></li>
-                                <li><a href="#">Sailing</a></li>
-                                <li><a href="#">Skiing</a></li>
+                                <li><a href="#"><%=footerFeaturedWidgetData.football%></a></li>
+                                <li><a href="#"><%=footerFeaturedWidgetData.golf%></a></li>
+                                <li><a href="#"><%=footerFeaturedWidgetData.tennis%></a></li>
+                                <li><a href="#"><%=footerFeaturedWidgetData.motorsport%></a></li>
+                                <li><a href="#"><%=footerFeaturedWidgetData.horseracing%></a></li>
+                                <li><a href="#"><%=footerFeaturedWidgetData.equestrian%></a></li>
+                                <li><a href="#"><%=footerFeaturedWidgetData.sailing%></a></li>
+                                <li><a href="#"><%=footerFeaturedWidgetData.skiing%></a></li>
                             </ul>
+                            <% } %>
                         </div>
                     </div>
 
@@ -52,18 +59,20 @@
                     <div class="col-12 col-sm-4 col-lg-2">
                         <div class="footer-widget-area mt-80">
                             <!-- Title -->
-                            <h4 class="widget-title">FAQ</h4>
+                            <%if(typeof footerFAQWidgetData != 'undefined'){  %>
+                            <h4 class="widget-title"><%=footerFAQWidgetData.title%></h4>
                             <!-- List -->
                             <ul class="list">
-                                <li><a href="#">Aviation</a></li>
-                                <li><a href="#">Business</a></li>
-                                <li><a href="#">Traveller</a></li>
-                                <li><a href="#">Destinations</a></li>
-                                <li><a href="#">Features</a></li>
-                                <li><a href="#">Food/Drink</a></li>
-                                <li><a href="#">Hotels</a></li>
-                                <li><a href="#">Partner Hotels</a></li>
+                                <li><a href="#"><%=footerFAQWidgetData.aviation%></a></li>
+                                <li><a href="#"><%=footerFAQWidgetData.business%></a></li>
+                                <li><a href="#"><%=footerFAQWidgetData.traveller%></a></li>
+                                <li><a href="#"><%=footerFAQWidgetData.destinations%></a></li>
+                                <li><a href="#"><%=footerFAQWidgetData.features%></a></li>
+                                <li><a href="#"><%=footerFAQWidgetData.fooddrink%></a></li>
+                                <li><a href="#"><%=footerFAQWidgetData.hotels%></a></li>
+                                <li><a href="#"><%=footerFAQWidgetData.partnerhotels%></a></li>
                             </ul>
+                            <% } %>
                         </div>
                     </div>
 
@@ -71,15 +80,17 @@
                     <div class="col-12 col-sm-4 col-lg-2">
                         <div class="footer-widget-area mt-80">
                             <!-- Title -->
-                            <h4 class="widget-title">+More</h4>
+                            <%if(typeof footerMoreWidgetData != 'undefined'){  %>
+                            <h4 class="widget-title"><%=footerMoreWidgetData.title%></h4>
                             <!-- List -->
                             <ul class="list">
-                                <li><a href="#">Fashion</a></li>
-                                <li><a href="#">Design</a></li>
-                                <li><a href="#">Architecture</a></li>
-                                <li><a href="#">Arts</a></li>
-                                <li><a href="#">Autos</a></li>
-                                <li><a href="#">Luxury</a></li>
+                                <li><a href="#"><%=footerMoreWidgetData.fashion%></a></li>
+                                <li><a href="#"><%=footerMoreWidgetData.design%></a></li>
+                                <li><a href="#"><%=footerMoreWidgetData.architecture%></a></li>
+                                <li><a href="#"><%=footerMoreWidgetData.arts%></a></li>
+                                <li><a href="#"><%=footerMoreWidgetData.autos%></a></li>
+                                <li><a href="#"><%=footerMoreWidgetData.luxury%></a></li>
                             </ul>
+                            <% } %>
                         </div>
                     </div>
