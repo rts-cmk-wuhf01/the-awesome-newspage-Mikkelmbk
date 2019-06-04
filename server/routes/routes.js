@@ -214,8 +214,27 @@ const footerMoreWidget = {
    "autos":"Autos",
    "luxury":"Luxury"
 }
+const singleArticleCommentArea = [
+   {
+      "author":"Tim-Othy",
+      "image":"30.jpg",
+      "date":"April 15, 2018",
+      "commentText":"Donec turpis erat, scelerisque id euismod sit amet, fermentum vel dolor. Nulla facilisi. Sed"
+   },
+   {
+      "author":"B-LAKE",
+      "image":"31.jpg",
+      "date":"April 15, 2018",
+      "commentText":"Donec turpis erat, scelerisque id euismod sit amet, fermentum vel dolor. Nulla facilisi. Sed"
+   },
+   {
+      "author":"DEE-NICE",
+      "image":"32.jpg",
+      "date":"April 15, 2018",
+      "commentText":"Donec turpis erat, scelerisque id euismod sit amet, fermentum vel dolor. Nulla facilisi. Sed"
+   },
+]
    app.get('/', (req, res, next) => {
-      
       res.render('home', {
         "latestPostWidgetData":latestPostWidget,
         "newsSinglePostData":newsSinglePost,
@@ -251,7 +270,8 @@ const footerMoreWidget = {
          "footerPoliticsWidgetData":footerPoliticsWidget,
          "footerFeaturedWidgetData":footerFeaturedWidget,
          "footerFAQWidgetData":footerFAQWidget,
-         "footerMoreWidgetData":footerMoreWidget
+         "footerMoreWidgetData":footerMoreWidget,
+         "singleArticleCommentAreaData":singleArticleCommentArea
       });
    });
 

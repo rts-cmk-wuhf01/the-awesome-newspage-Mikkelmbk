@@ -1,0 +1,24 @@
+<% if(typeof singleArticleCommentAreaData != 'undefined') { %>
+<% singleArticleCommentAreaData.forEach((singleArticleCommentArea)=>{
+	let d = new Date(singleArticleCommentArea.date) %>
+
+
+<li class="single_comment_area">
+	<!-- Comment Content -->
+	<div class="comment-content d-flex">
+		<!-- Comment Author -->
+		<div class="comment-author">
+			<img src="img/bg-img/<%=singleArticleCommentArea.image%>" alt="author">
+		</div>
+		<!-- Comment Meta -->
+		<div class="comment-meta">
+			<a href="#" class="post-author"><%=singleArticleCommentArea.author%></a>
+			<a href="#" class="post-date"><%=dateAndTime.format(d,'hh:mm A | MMMM DD')%></a>
+			<p><%=singleArticleCommentArea.commentText%></p>
+		</div>
+	</div>
+</li>
+
+<% }) %>
+
+<% } %>
