@@ -276,8 +276,8 @@ module.exports = (app) => {
 
 
 
-   app.get('/categories', (req, res, next) => {
-      res.render('categories', {
+   app.get('/categories', (req, res, next) => { // når der står /categories i url'en
+      res.render('categories', { // så hentes filen ved navn categories og vises.
          "latestPostWidgetData": latest_post_widget,
          "newsWidgetData": news_widget,
          "footerContactWidgetData": footer_contact_widget,
