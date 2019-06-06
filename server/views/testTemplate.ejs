@@ -1,0 +1,9 @@
+<% if(typeof products != 'undefined') { %>
+   <% products.forEach(product => { %>
+   <div>
+      <h3><%= product.productTitle %></h3>
+      <p><%= product.productDescription %></p>
+      <span><%= product.productPrice%> </span>
+   </div>
+   <% }); %>
+<% } %>
