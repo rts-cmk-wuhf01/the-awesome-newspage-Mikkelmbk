@@ -6,14 +6,18 @@
                                 <a href="/"><img src="img/core-img/logo.png" alt=""></a>
                             </div>
                             <!-- List -->
+
                             <%if(typeof footerContactWidgetData != 'undefined'){  %>
                             <ul class="list">
-                                <li><a href="mailto:contact@youremail.com"><%=footerContactWidgetData.mail%></a></li>
-                                <li><a href="tel:+4352782883884"><%=footerContactWidgetData.phone%></a></li>
-                                <li><a href="http://yoursitename.com"><%=footerContactWidgetData.website%></a></li>
+                            <% footerContactWidgetData.contact.forEach((contactInfo)=>{ %>
+                                <li><a href="<%=contactInfo%>"><%=contactInfo%></a></li>
+                                <%})%>
+
                             </ul>
                              
                             <% } %>
+
+
                         </div>
                     </div>
 

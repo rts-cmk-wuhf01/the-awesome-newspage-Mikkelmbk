@@ -173,10 +173,13 @@ module.exports = (app) => {
          "date": "February 11, 2018"
       }
    ]
-   const footer_contact_widget = {
-      "mail": "contact@youremail.com",
-      "phone": "+43 5278 2883 884",
-      "website": "www.yoursitename.com"
+
+   const footer_contact_widget = { 
+      "contact":[
+         "contact@youremail.com",
+         "+43 5278 2883 884",
+         "www.yoursitename.com"
+      ]
    }
    const footer_politics_widget = {
       "title": "Politics",
