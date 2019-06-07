@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Vært: 127.0.0.1
--- Genereringstid: 07. 06 2019 kl. 13:14:50
+-- Genereringstid: 07. 06 2019 kl. 13:27:21
 -- Serverversion: 10.1.30-MariaDB
 -- PHP-version: 7.2.1
 
@@ -77,7 +77,7 @@ CREATE TABLE `author` (
 --
 
 INSERT INTO `author` (`author_id`, `author_name`, `fk_author_image_id`, `author_description`, `author_title`, `author_mail`, `author_hired_date`) VALUES
-(1, 'Christinne Williams', 2, 'BLA BLA BLA BLA BLA', 'EDITOR', 'Author@live.dk', '2019-06-04');
+(1, 'Christinne Williams', 32, 'BLA BLA BLA BLA BLA', 'EDITOR', 'Author@live.dk', '2019-06-04');
 
 -- --------------------------------------------------------
 
@@ -217,6 +217,15 @@ CREATE TABLE `user` (
   `user_birthday` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Data dump for tabellen `user`
+--
+
+INSERT INTO `user` (`user_id`, `user_email`, `user_password`, `user_name`, `fk_user_image_id`, `user_created_date`, `user_birthday`) VALUES
+(1, 'Mikkelmbk@live.dk', 'hej', 'Aaron', 30, '2019-06-03', '1992-06-10'),
+(2, 'Mikkelmbk@live.dk', 'hejhej', 'B-lake', 31, '2019-06-02', '1967-06-28'),
+(3, 'Mikkelmbk@live.dk', 'hejhejhej', 'DeeNice', 32, '2019-06-11', '1993-04-12');
+
 -- --------------------------------------------------------
 
 --
@@ -326,7 +335,7 @@ ALTER TABLE `image`
 -- Tilføj AUTO_INCREMENT i tabel `user`
 --
 ALTER TABLE `user`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- Tilføj AUTO_INCREMENT i tabel `video`
