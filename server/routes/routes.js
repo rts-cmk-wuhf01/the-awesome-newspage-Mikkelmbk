@@ -248,12 +248,14 @@ module.exports = (app) => {
 
    app.get('/database', async (req, res, next) => {
       let db = await mysql.connect();
-      let [products] = await db.execute('SELECT * FROM products');
+      let [products] = await db.execute('SELECT * FROM article');
       db.end();
 
-      res.render('testTemplate.ejs', {
-         'products': products
-      });
+      res.send(products);
+
+      // res.render('testTemplate.ejs', {
+      //    'products': products
+      // });
 
    });
 
