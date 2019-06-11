@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.4
+-- version 4.8.5
 -- https://www.phpmyadmin.net/
 --
--- Vært: 127.0.0.1
--- Genereringstid: 07. 06 2019 kl. 13:27:21
--- Serverversion: 10.1.30-MariaDB
--- PHP-version: 7.2.1
+-- Host: 127.0.0.1
+-- Generation Time: Jun 11, 2019 at 09:34 AM
+-- Server version: 10.1.38-MariaDB
+-- PHP Version: 7.1.27
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -25,7 +25,7 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Struktur-dump for tabellen `article`
+-- Table structure for table `article`
 --
 
 CREATE TABLE `article` (
@@ -42,24 +42,31 @@ CREATE TABLE `article` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Data dump for tabellen `article`
+-- Dumping data for table `article`
 --
 
 INSERT INTO `article` (`article_id`, `fk_article_image_id`, `article_title`, `article_content`, `article_like_count`, `article_comment_count`, `article_date`, `article_tags`, `fk_author_id`, `fk_category_id`) VALUES
-(1, 16, 'Financial news: A new company is born today at the stock market', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam eu metus sit amet odio sodales placerat. Sed varius leo ac leo fermentum, eu cursus nunc maximus. Integer convallis nisi nibh, et ornare neque ullamcorper ac. Nam id congue lectus, a venenatis massa. Maecenas justo libero, vulputate vel nunc id, blandit feugiat sem.', 392, 12, '2018-04-11 07:00:00', 'NOT IN USE', 0, 0),
-(2, 17, 'NOT IN USE', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam eu metus\r\n                    sit amet odio sodales placerat. Sed varius leo ac...', 392, 10, '2018-04-11 07:00:00', 'NOT IN USE', 0, 0),
-(3, 18, 'NOT IN USE', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam eu metus\r\n                    sit amet odio sodales placerat. Sed varius leo ac...', 392, 10, '2018-04-11 07:00:00', 'NOT IN USE', 0, 0),
-(4, 19, 'NOT IN USE', 'Pellentesque mattis arcu massa, nec fringilla turpis eleifend id.', 0, 0, '2018-04-11 07:00:00', 'NOT IN USE', 0, 0),
-(5, 20, 'NOT IN USE', 'Pellentesque mattis arcu massa, nec fringilla turpis eleifend id.', 0, 0, '2018-04-11 07:00:00', 'NOT IN USE', 0, 0),
-(6, 21, 'NOT IN USE', 'Sed a elit euismod augue semper congue sit amet ac sapien.', 0, 0, '2018-04-11 07:00:00', 'NOT IN USE', 0, 0),
-(7, 22, 'NOT IN USE', 'Sed a elit euismod augue semper congue sit amet ac sapien.', 0, 0, '2018-04-11 07:00:00', 'NOT IN USE', 0, 0),
-(8, 23, 'NOT IN USE', 'Sed a elit euismod augue semper congue sit amet ac sapien.', 0, 0, '2018-04-11 07:00:00', 'NOT IN USE', 0, 0),
-(9, 24, 'NOT IN USE', 'Sed a elit euismod augue semper congue sit amet ac sapien.', 0, 0, '2018-04-11 07:00:00', 'NOT IN USE', 0, 0);
+(1, 16, 'Financial news: A new company is born today at the stock market', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam eu metus sit amet odio sodales placerat. Sed varius leo ac leo fermentum, eu cursus nunc maximus. Integer convallis nisi nibh, et ornare neque ullamcorper ac. Nam id congue lectus, a venenatis massa. Maecenas justo libero, vulputate vel nunc id, blandit feugiat sem.', 392, 12, '2018-04-11 07:00:00', 'NOT IN USE', 1, 1),
+(2, 17, 'NOT IN USE', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam eu metus\r\n                    sit amet odio sodales placerat. Sed varius leo ac...', 392, 10, '2018-04-11 07:00:00', 'NOT IN USE', 1, 2),
+(3, 18, 'NOT IN USE', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam eu metus\r\n                    sit amet odio sodales placerat. Sed varius leo ac...', 392, 10, '2018-04-11 07:00:00', 'NOT IN USE', 1, 3),
+(4, 19, 'NOT IN USE', 'Pellentesque mattis arcu massa, nec fringilla turpis eleifend id.', 0, 0, '2018-04-11 07:00:00', 'NOT IN USE', 1, 4),
+(5, 20, 'NOT IN USE', 'Pellentesque mattis arcu massa, nec fringilla turpis eleifend id.', 0, 0, '2018-04-11 07:00:00', 'NOT IN USE', 1, 5),
+(6, 21, 'NOT IN USE', 'Sed a elit euismod augue semper congue sit amet ac sapien.', 0, 0, '2018-04-11 07:00:00', 'NOT IN USE', 1, 6),
+(7, 22, 'NOT IN USE', 'Sed a elit euismod augue semper congue sit amet ac sapien.', 0, 0, '2018-04-11 07:00:00', 'NOT IN USE', 1, 7),
+(8, 23, 'NOT IN USE', 'Sed a elit euismod augue semper congue sit amet ac sapien.', 0, 0, '2018-04-11 07:00:00', 'NOT IN USE', 1, 8),
+(9, 24, 'NOT IN USE', 'Sed a elit euismod augue semper congue sit amet ac sapien.', 0, 0, '2018-04-11 07:00:00', 'NOT IN USE', 1, 1),
+(10, 24, 'NOT IN USE', 'Sed a elit euismod augue semper congue sit amet ac sapien.', 0, 0, '2018-04-11 07:00:00', 'NOT IN USE', 1, 2),
+(11, 24, 'NOT IN USE', 'Sed a elit euismod augue semper congue sit amet ac sapien.', 0, 0, '2018-04-11 07:00:00', 'NOT IN USE', 1, 3),
+(12, 24, 'NOT IN USE', 'Sed a elit euismod augue semper congue sit amet ac sapien.', 0, 0, '2018-04-11 07:00:00', 'NOT IN USE', 1, 4),
+(13, 24, 'NOT IN USE', 'Sed a elit euismod augue semper congue sit amet ac sapien.', 0, 0, '2018-04-11 07:00:00', 'NOT IN USE', 1, 5),
+(14, 24, 'NOT IN USE', 'Sed a elit euismod augue semper congue sit amet ac sapien.', 0, 0, '2018-04-11 07:00:00', 'NOT IN USE', 1, 6),
+(15, 24, 'NOT IN USE', 'Sed a elit euismod augue semper congue sit amet ac sapien.', 0, 0, '2018-04-11 07:00:00', 'NOT IN USE', 1, 7),
+(16, 24, 'NOT IN USE', 'Sed a elit euismod augue semper congue sit amet ac sapien.', 0, 0, '2018-04-11 07:00:00', 'NOT IN USE', 1, 8);
 
 -- --------------------------------------------------------
 
 --
--- Struktur-dump for tabellen `author`
+-- Table structure for table `author`
 --
 
 CREATE TABLE `author` (
@@ -73,7 +80,7 @@ CREATE TABLE `author` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Data dump for tabellen `author`
+-- Dumping data for table `author`
 --
 
 INSERT INTO `author` (`author_id`, `author_name`, `fk_author_image_id`, `author_description`, `author_title`, `author_mail`, `author_hired_date`) VALUES
@@ -82,7 +89,7 @@ INSERT INTO `author` (`author_id`, `author_name`, `fk_author_image_id`, `author_
 -- --------------------------------------------------------
 
 --
--- Struktur-dump for tabellen `categories`
+-- Table structure for table `categories`
 --
 
 CREATE TABLE `categories` (
@@ -92,7 +99,7 @@ CREATE TABLE `categories` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Data dump for tabellen `categories`
+-- Dumping data for table `categories`
 --
 
 INSERT INTO `categories` (`category_id`, `category_title`, `category_link`) VALUES
@@ -108,7 +115,7 @@ INSERT INTO `categories` (`category_id`, `category_title`, `category_link`) VALU
 -- --------------------------------------------------------
 
 --
--- Struktur-dump for tabellen `comments`
+-- Table structure for table `comments`
 --
 
 CREATE TABLE `comments` (
@@ -122,7 +129,7 @@ CREATE TABLE `comments` (
 -- --------------------------------------------------------
 
 --
--- Struktur-dump for tabellen `contact`
+-- Table structure for table `contact`
 --
 
 CREATE TABLE `contact` (
@@ -136,7 +143,7 @@ CREATE TABLE `contact` (
 -- --------------------------------------------------------
 
 --
--- Struktur-dump for tabellen `image`
+-- Table structure for table `image`
 --
 
 CREATE TABLE `image` (
@@ -145,7 +152,7 @@ CREATE TABLE `image` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Data dump for tabellen `image`
+-- Dumping data for table `image`
 --
 
 INSERT INTO `image` (`image_id`, `image_name`) VALUES
@@ -204,7 +211,7 @@ INSERT INTO `image` (`image_id`, `image_name`) VALUES
 -- --------------------------------------------------------
 
 --
--- Struktur-dump for tabellen `user`
+-- Table structure for table `user`
 --
 
 CREATE TABLE `user` (
@@ -218,7 +225,7 @@ CREATE TABLE `user` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Data dump for tabellen `user`
+-- Dumping data for table `user`
 --
 
 INSERT INTO `user` (`user_id`, `user_email`, `user_password`, `user_name`, `fk_user_image_id`, `user_created_date`, `user_birthday`) VALUES
@@ -229,7 +236,7 @@ INSERT INTO `user` (`user_id`, `user_email`, `user_password`, `user_name`, `fk_u
 -- --------------------------------------------------------
 
 --
--- Struktur-dump for tabellen `video`
+-- Table structure for table `video`
 --
 
 CREATE TABLE `video` (
@@ -240,105 +247,105 @@ CREATE TABLE `video` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Begrænsninger for dumpede tabeller
+-- Indexes for dumped tables
 --
 
 --
--- Indeks for tabel `article`
+-- Indexes for table `article`
 --
 ALTER TABLE `article`
   ADD PRIMARY KEY (`article_id`);
 
 --
--- Indeks for tabel `author`
+-- Indexes for table `author`
 --
 ALTER TABLE `author`
   ADD PRIMARY KEY (`author_id`);
 
 --
--- Indeks for tabel `categories`
+-- Indexes for table `categories`
 --
 ALTER TABLE `categories`
   ADD PRIMARY KEY (`category_id`);
 
 --
--- Indeks for tabel `comments`
+-- Indexes for table `comments`
 --
 ALTER TABLE `comments`
   ADD PRIMARY KEY (`comment_id`);
 
 --
--- Indeks for tabel `contact`
+-- Indexes for table `contact`
 --
 ALTER TABLE `contact`
   ADD PRIMARY KEY (`contact_id`);
 
 --
--- Indeks for tabel `image`
+-- Indexes for table `image`
 --
 ALTER TABLE `image`
   ADD PRIMARY KEY (`image_id`);
 
 --
--- Indeks for tabel `user`
+-- Indexes for table `user`
 --
 ALTER TABLE `user`
   ADD PRIMARY KEY (`user_id`);
 
 --
--- Indeks for tabel `video`
+-- Indexes for table `video`
 --
 ALTER TABLE `video`
   ADD PRIMARY KEY (`video_id`);
 
 --
--- Brug ikke AUTO_INCREMENT for slettede tabeller
+-- AUTO_INCREMENT for dumped tables
 --
 
 --
--- Tilføj AUTO_INCREMENT i tabel `article`
+-- AUTO_INCREMENT for table `article`
 --
 ALTER TABLE `article`
-  MODIFY `article_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `article_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
--- Tilføj AUTO_INCREMENT i tabel `author`
+-- AUTO_INCREMENT for table `author`
 --
 ALTER TABLE `author`
   MODIFY `author_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- Tilføj AUTO_INCREMENT i tabel `categories`
+-- AUTO_INCREMENT for table `categories`
 --
 ALTER TABLE `categories`
   MODIFY `category_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
--- Tilføj AUTO_INCREMENT i tabel `comments`
+-- AUTO_INCREMENT for table `comments`
 --
 ALTER TABLE `comments`
   MODIFY `comment_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- Tilføj AUTO_INCREMENT i tabel `contact`
+-- AUTO_INCREMENT for table `contact`
 --
 ALTER TABLE `contact`
   MODIFY `contact_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- Tilføj AUTO_INCREMENT i tabel `image`
+-- AUTO_INCREMENT for table `image`
 --
 ALTER TABLE `image`
   MODIFY `image_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
 
 --
--- Tilføj AUTO_INCREMENT i tabel `user`
+-- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
   MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- Tilføj AUTO_INCREMENT i tabel `video`
+-- AUTO_INCREMENT for table `video`
 --
 ALTER TABLE `video`
   MODIFY `video_id` int(11) NOT NULL AUTO_INCREMENT;
