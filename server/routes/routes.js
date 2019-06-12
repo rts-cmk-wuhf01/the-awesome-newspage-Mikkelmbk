@@ -233,11 +233,19 @@ module.exports = (app) => {
       INNER JOIN image ON image_id = fk_article_image_id
       GROUP BY category_id`
       );
+      let [large_featured_post] = await db.execute(`
+      SELECT image_name, category_title, article_title, author_name, article_content, article_comment_count, article_like_count, article_id
+      FROM article
+      INNER JOIN image ON fk_article_image_id = image_id
+      INNER JOIN categories ON fk_category_id = category_id
+      INNER JOIN author ON fk_author_id = author_id
+      `)
 
       db.end();
 
       res.render('home', {
          "latestPostWidgetData": latest_post_widget,
+         "largeFeaturedPostData":large_featured_post[0],
          "newsSinglePostData": news_single_post,
          "newsWidgetData": news_widget,
          "videoData": video_content,
@@ -257,7 +265,7 @@ module.exports = (app) => {
    app.get('/categories/:category_id', async (req, res, next) => { // når der står /categories i url'en
       let db = await mysql.connect();
       let [articles] = await db.execute(`
-      SELECT image_name, category_title, article_title, author_name, article_like_count, article_comment_count
+      SELECT image_name, category_title, article_title, author_name, article_like_count, article_comment_count, article_content
       FROM article
       INNER JOIN image ON fk_article_image_id = image_id
       INNER JOIN categories ON fk_category_id = category_id
@@ -288,9 +296,16 @@ module.exports = (app) => {
       });
    });
 
-   app.get('/single-article', async (req, res, next) => {
+   app.get('/single-article/:article_id', async (req, res, next) => {
       let db = await mysql.connect();
-      let [articles] = await db.execute('SELECT * FROM article');
+      let [article] = await db.execute(`
+      SELECT image_name, category_title, article_title, author_name, author_description, article_like_count, article_comment_count, article_content, author_title
+      FROM article
+      INNER JOIN image ON fk_article_image_id = image_id
+      INNER JOIN categories ON fk_category_id = category_id
+      INNER JOIN author ON fk_author_id = author_id
+      WHERE article_id = ?`, [req.params.article_id]);
+
       let [categories] = await db.execute('SELECT category_title, category_id FROM categories');
       let [latest_post_widget] = await db.execute(`
       SELECT * 
@@ -302,6 +317,7 @@ module.exports = (app) => {
       db.end();
       res.render('single-article', {
          "latestPostWidgetData": latest_post_widget,
+         "singleArticleData":article[0],
          "newsWidgetData": news_widget,
          "footerContactWidgetData": footer_contact_widget,
          "footerPoliticsWidgetData": footer_politics_widget,
