@@ -2,44 +2,6 @@ const mysql = require('../config/mysql');
 
 module.exports = (app) => {
 
-   const latest_post_widget = [
-      {
-         "title": "Finances",
-         "image": "19.jpg",
-         "textContent": "Pellentesque mattis arcu massa, nec fringilla turpis eleifend id.",
-         "dateTime": "April 14, 2019, 07:00:00"
-      },
-      {
-         "title": "Politics",
-         "image": "20.jpg",
-         "textContent": "Sed a elit euismod augue semper congue sit amet ac sapien.",
-         "dateTime": "April 14, 2019, 07:00:00"
-      },
-      {
-         "title": "Health",
-         "image": "21.jpg",
-         "textContent": "Sed a elit euismod augue semper congue sit amet ac sapien.",
-         "dateTime": "April 14, 2019, 07:00:00"
-      },
-      {
-         "title": "Finance",
-         "image": "22.jpg",
-         "textContent": "Sed a elit euismod augue semper congue sit amet ac sapien.",
-         "dateTime": "April 14, 2019, 07:00:00"
-      },
-      {
-         "title": "Travel",
-         "image": "23.jpg",
-         "textContent": "Sed a elit euismod augue semper congue sit amet ac sapien.",
-         "dateTime": "April 14, 2019, 07:00:00"
-      },
-      {
-         "title": "Politics",
-         "image": "24.jpg",
-         "textContent": "Sed a elit euismod augue semper congue sit amet ac sapien.",
-         "dateTime": "April 14, 2019, 07:00:00"
-      },
-   ]
    const news_single_post = [
       {
          "image": "12.jpg",
@@ -246,12 +208,13 @@ module.exports = (app) => {
       },
    ]
 
-   app.get('/database', async (req, res, next) => {
+   app.get('/database/:category_id', async (req, res, next) => {
       let db = await mysql.connect();
-      let [products] = await db.execute('SELECT * FROM article');
+      let [articles] = await db.execute('SELECT * FROM article');
+      let [test] = await db.execute('SELECT * FROM article WHERE fk_category_id = ?', [req.params.category_id]);
       db.end();
 
-      res.send(products);
+      res.send(test);
 
       // res.render('testTemplate.ejs', {
       //    'products': products
@@ -260,7 +223,19 @@ module.exports = (app) => {
    });
 
 
-   app.get('/', (req, res, next) => {
+   app.get('/', async (req, res, next) => {
+      let db = await mysql.connect();
+      let [categories] = await db.execute('SELECT category_title, category_id FROM categories');
+      let [latest_post_widget] = await db.execute(`
+      SELECT * 
+      FROM categories 
+      INNER JOIN article ON fk_category_id = category_id
+      INNER JOIN image ON image_id = fk_article_image_id
+      GROUP BY category_id`
+      );
+
+      db.end();
+
       res.render('home', {
          "latestPostWidgetData": latest_post_widget,
          "newsSinglePostData": news_single_post,
@@ -272,13 +247,32 @@ module.exports = (app) => {
          "footerPoliticsWidgetData": footer_politics_widget,
          "footerFeaturedWidgetData": footer_featured_widget,
          "footerFAQWidgetData": footer_fAQ_widget,
-         "footerMoreWidgetData": footer_more_widget
+         "footerMoreWidgetData": footer_more_widget,
+         "navigationCategoryData":categories
       });
    });
 
 
 
-   app.get('/categories', (req, res, next) => { // når der står /categories i url'en
+   app.get('/categories/:category_id', async (req, res, next) => { // når der står /categories i url'en
+      let db = await mysql.connect();
+      let [articles] = await db.execute(`
+      SELECT image_name, category_title, article_title, author_name, article_like_count, article_comment_count
+      FROM article
+      INNER JOIN image ON fk_article_image_id = image_id
+      INNER JOIN categories ON fk_category_id = category_id
+      INNER JOIN author ON fk_author_id = author_id
+      WHERE fk_category_id = ?`, [req.params.category_id]);
+
+      let [categories] = await db.execute('SELECT category_title, category_id FROM categories');
+      let [latest_post_widget] = await db.execute(`
+      SELECT * 
+      FROM categories 
+      INNER JOIN article ON fk_category_id = category_id
+      INNER JOIN image ON image_id = fk_article_image_id
+      GROUP BY category_id`
+      );
+      db.end();
       res.render('categories', { // så hentes filen ved navn categories og vises.
          "latestPostWidgetData": latest_post_widget,
          "newsWidgetData": news_widget,
@@ -286,11 +280,26 @@ module.exports = (app) => {
          "footerPoliticsWidgetData": footer_politics_widget,
          "footerFeaturedWidgetData": footer_featured_widget,
          "footerFAQWidgetData": footer_fAQ_widget,
-         "footerMoreWidgetData": footer_more_widget
+         "footerMoreWidgetData": footer_more_widget,
+         "navigationCategoryData":categories,
+         "articlesData":articles
+
+
       });
    });
 
-   app.get('/single-article', (req, res, next) => {
+   app.get('/single-article', async (req, res, next) => {
+      let db = await mysql.connect();
+      let [articles] = await db.execute('SELECT * FROM article');
+      let [categories] = await db.execute('SELECT category_title, category_id FROM categories');
+      let [latest_post_widget] = await db.execute(`
+      SELECT * 
+      FROM categories 
+      INNER JOIN article ON fk_category_id = category_id
+      INNER JOIN image ON image_id = fk_article_image_id
+      GROUP BY category_id`
+      );
+      db.end();
       res.render('single-article', {
          "latestPostWidgetData": latest_post_widget,
          "newsWidgetData": news_widget,
@@ -299,27 +308,38 @@ module.exports = (app) => {
          "footerFeaturedWidgetData": footer_featured_widget,
          "footerFAQWidgetData": footer_fAQ_widget,
          "footerMoreWidgetData": footer_more_widget,
-         "singleArticleCommentAreaData": single_article_comment_area
+         "singleArticleCommentAreaData": single_article_comment_area,
+         "navigationCategoryData":categories
       });
    });
 
-   app.get('/about-us', (req, res, next) => {
+   app.get('/about-us', async (req, res, next) => {
+      let db = await mysql.connect();
+      let [articles] = await db.execute('SELECT * FROM article');
+      let [categories] = await db.execute('SELECT category_title, category_id FROM categories');
+      db.end();
       res.render('about-us', {
          "footerContactWidgetData": footer_contact_widget,
          "footerPoliticsWidgetData": footer_politics_widget,
          "footerFeaturedWidgetData": footer_featured_widget,
          "footerFAQWidgetData": footer_fAQ_widget,
-         "footerMoreWidgetData": footer_more_widget
+         "footerMoreWidgetData": footer_more_widget,
+         "navigationCategoryData":categories
       });
    });
 
-   app.get('/contact', (req, res, next) => {
+   app.get('/contact', async (req, res, next) => {
+      let db = await mysql.connect();
+      let [articles] = await db.execute('SELECT * FROM article');
+      let [categories] = await db.execute('SELECT category_title, category_id FROM categories');
+      db.end();
       res.render('contact', {
          "footerContactWidgetData": footer_contact_widget,
          "footerPoliticsWidgetData": footer_politics_widget,
          "footerFeaturedWidgetData": footer_featured_widget,
          "footerFAQWidgetData": footer_fAQ_widget,
-         "footerMoreWidgetData": footer_more_widget
+         "footerMoreWidgetData": footer_more_widget,
+         "navigationCategoryData":categories
       });
    });
 

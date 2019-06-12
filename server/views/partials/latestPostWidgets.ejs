@@ -3,18 +3,18 @@
     <%if(typeof latestPostWidgetData != 'undefined'){  %>
     <div class="latest-posts-widget mb-50">
     <% latestPostWidgetData.forEach((postData)=>{
-        let d = new Date(postData.dateTime); %>
+        let d = new Date(postData.article_date); %>
         
     <!-- Single Featured Post -->
     <div class="single-blog-post small-featured-post d-flex">
         <div class="post-thumb">
-            <a href="#"><img src="img/bg-img/<%= postData.image %>" alt=""></a>
+            <a href="#"><img src="/img/bg-img/<%= postData.image_name %>" alt=""></a>
         </div>
         <div class="post-data">
-            <a href="#" class="post-catagory"><%= postData.title %></a>
+            <a href="#" class="post-catagory"><%= postData.category_title %></a>
             <div class="post-meta">
                 <a href="#" class="post-title">
-                    <h6><%= postData.textContent %></h6>
+                    <h6><%= postData.article_title %></h6>
                 </a>
                 <p class="post-date"><span><%= dateAndTime.format(d,'hh:mm A | MMMM DD') %></span></p>
             </div>
