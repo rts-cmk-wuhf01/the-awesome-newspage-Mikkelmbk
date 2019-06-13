@@ -2,44 +2,6 @@ const mysql = require('../config/mysql');
 
 module.exports = (app) => {
 
-   const news_single_post = [
-      {
-         "image": "12.jpg",
-         "title": "Finance",
-         "textContent": "Dolor sit amet, consectetur adipiscing elit. Nam eu metus sit amet",
-         "likeImage": "like.png",
-         "chatImage": "chat.png",
-         "likeCount": "392",
-         "chatCount": "10"
-      },
-      {
-         "image": "13.jpg",
-         "title": "Finance",
-         "textContent": "Dolor sit amet, consectetur adipiscing elit. Nam eu metus sit amet",
-         "likeImage": "like.png",
-         "chatImage": "chat.png",
-         "likeCount": "392",
-         "chatCount": "10"
-      },
-      {
-         "image": "14.jpg",
-         "title": "Finance",
-         "textContent": "Dolor sit amet, consectetur adipiscing elit. Nam eu metus sit amet",
-         "likeImage": "like.png",
-         "chatImage": "chat.png",
-         "likeCount": "392",
-         "chatCount": "10"
-      },
-      {
-         "image": "15.jpg",
-         "title": "Finance",
-         "textContent": "Dolor sit amet, consectetur adipiscing elit. Nam eu metus sit amet",
-         "likeImage": "like.png",
-         "chatImage": "chat.png",
-         "likeCount": "392",
-         "chatCount": "10"
-      },
-   ]
    const news_widget = [
       {
          "newsWidgetDate": "April 14, 2018"
@@ -239,13 +201,33 @@ module.exports = (app) => {
       INNER JOIN image ON fk_article_image_id = image_id
       INNER JOIN categories ON fk_category_id = category_id
       INNER JOIN author ON fk_author_id = author_id
+      `);
+      let [medium_featured_post] = await db.execute(`
+      SELECT image_name, category_title, article_title, article_comment_count, article_like_count, article_id
+      FROM article
+      INNER JOIN image ON fk_article_image_id = image_id
+      INNER JOIN categories ON fk_category_id = category_id
+      WHERE article_id >= 2 ORDER BY article_id ASC
+      LIMIT 2
+      `);
+      let [news_single_post] = await db.execute(`
+      SELECT image_name, category_title, article_title, article_comment_count, article_like_count, article_id
+      FROM article
+      INNER JOIN image ON fk_article_image_id = image_id
+      INNER JOIN categories ON fk_category_id = category_id
+      WHERE article_id >= 4 ORDER BY article_id ASC
+      LIMIT 4
       `)
+
+
+
 
       db.end();
 
       res.render('home', {
          "latestPostWidgetData": latest_post_widget,
          "largeFeaturedPostData":large_featured_post[0],
+         "mediumFeaturedPostData":medium_featured_post,
          "newsSinglePostData": news_single_post,
          "newsWidgetData": news_widget,
          "videoData": video_content,

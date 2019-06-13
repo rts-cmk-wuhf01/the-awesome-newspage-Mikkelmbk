@@ -3,18 +3,18 @@
     <div class="col-12 col-md-6">
     <div class="single-blog-post style-3">
         <div class="post-thumb">
-            <a href="#"><img src="/img/bg-img/<%= singlePost.image %>" alt=""></a>
+            <a href="/single-article/<%=singlePost.article_id%>"><img src="/img/bg-img/<%=singlePost.image_name%>" alt=""></a>
         </div>
         <div class="post-data">
-            <a href="#" class="post-catagory"><%=singlePost.title%></a>
-            <a href="#" class="post-title">
-                <h6><%=singlePost.textContent%></h6>
+            <a href="#" class="post-catagory"><%=singlePost.category_title%></a>
+            <a href="/single-article/<%=singlePost.article_id%>" class="post-title">
+                <h6><%=singlePost.article_title%></h6>
             </a>
             <div class="post-meta d-flex align-items-center">
-                <a href="#" class="post-like"><img src="/img/core-img/<%=singlePost.likeImage%>" alt="">
-                    <span><%=singlePost.likeCount%></span></a>
-                <a href="#" class="post-comment"><img src="/img/core-img/<%=singlePost.chatImage%>" alt="">
-                    <span><%=singlePost.chatCount%></span></a>
+                <a href="#" class="post-like"><img src="/img/core-img/like.png" alt="">
+                    <span><%=singlePost.article_like_count%></span></a>
+                <a href="#" class="post-comment"><img src="/img/core-img/chat.png" alt="">
+                    <span><%=singlePost.article_comment_count%></span></a>
             </div>
         </div>
     </div>
