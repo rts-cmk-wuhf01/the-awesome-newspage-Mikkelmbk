@@ -81,7 +81,10 @@ module.exports = (app) => {
 
    app.get('/', async (req, res, next) => {
       let db = await mysql.connect();
-      let [categories] = await db.execute('SELECT category_title, category_id FROM categories');
+      let [categories] = await db.execute(`
+      SELECT category_title, category_id 
+      FROM categories
+      `);
       let [latest_post_widget] = await db.execute(`
       SELECT * 
       FROM categories 
@@ -90,14 +93,14 @@ module.exports = (app) => {
       GROUP BY category_id`
       );
       let [large_featured_post] = await db.execute(`
-      SELECT image_name, category_title, article_title, author_name, article_content, article_comment_count, article_like_count, article_id
+      SELECT image_name, category_title, article_title, author_name, article_content, article_comment_count, article_like_count, article_id, category_id
       FROM article
       INNER JOIN image ON fk_article_image_id = image_id
       INNER JOIN categories ON fk_category_id = category_id
       INNER JOIN author ON fk_author_id = author_id
       `);
       let [medium_featured_post] = await db.execute(`
-      SELECT image_name, category_title, article_title, article_comment_count, article_like_count, article_id
+      SELECT image_name, category_title, article_title, article_comment_count, article_like_count, article_id, category_id
       FROM article
       INNER JOIN image ON fk_article_image_id = image_id
       INNER JOIN categories ON fk_category_id = category_id
@@ -105,7 +108,7 @@ module.exports = (app) => {
       LIMIT 2
       `);
       let [news_single_post] = await db.execute(`
-      SELECT image_name, category_title, article_title, article_comment_count, article_like_count, article_id
+      SELECT image_name, category_title, article_title, article_comment_count, article_like_count, article_id, category_id
       FROM article
       INNER JOIN image ON fk_article_image_id = image_id
       INNER JOIN categories ON fk_category_id = category_id
@@ -168,7 +171,7 @@ module.exports = (app) => {
    app.get('/categories/:category_id', async (req, res, next) => { // når der står /categories i url'en
       let db = await mysql.connect();
       let [articles] = await db.execute(`
-      SELECT image_name, category_title, article_title, author_name, article_like_count, article_comment_count, article_content
+      SELECT image_name, category_title, article_title, author_name, article_like_count, article_comment_count, article_content, article_id
       FROM article
       INNER JOIN image ON fk_article_image_id = image_id
       INNER JOIN categories ON fk_category_id = category_id
