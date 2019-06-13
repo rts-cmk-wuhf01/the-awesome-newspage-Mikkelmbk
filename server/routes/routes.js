@@ -2,42 +2,7 @@ const mysql = require('../config/mysql');
 
 module.exports = (app) => {
 
-   const news_widget = [
-      {
-         "newsWidgetDate": "April 14, 2018"
-      },
-      {
-         "newsWidgetDate": "April 14, 2018"
-      },
-      {
-         "newsWidgetDate": "April 14, 2018"
-      },
-      {
-         "newsWidgetDate": "April 14, 2018"
-      },
-   ]
-   const video_content = [
-      {
-         "image": "video1.jpg",
-         "videoLink": "https://www.youtube.com/watch?v=8u1eyw9p1hg"
-      },
-      {
-         "image": "video2.jpg",
-         "videoLink": "https://www.youtube.com/watch?v=1wiz0UsBPac"
-      },
-      {
-         "image": "video3.jpg",
-         "videoLink": "https://www.youtube.com/watch?v=sFYo2-KUeTA"
-      },
-      {
-         "image": "16.jpg",
-         "videoLink": "https://www.youtube.com/watch?v=Dd7FixvoKBw"
-      },
-      {
-         "image": "17.jpg",
-         "videoLink": "https://www.youtube.com/watch?v=WLAq3JVJ6Ho"
-      },
-   ]
+
    const editorial_main_post = [
       {
          "image": "1.jpg",
@@ -176,12 +141,6 @@ module.exports = (app) => {
       let [test] = await db.execute('SELECT * FROM article WHERE fk_category_id = ?', [req.params.category_id]);
       db.end();
 
-      res.send(test);
-
-      // res.render('testTemplate.ejs', {
-      //    'products': products
-      // });
-
    });
 
 
@@ -217,9 +176,18 @@ module.exports = (app) => {
       INNER JOIN categories ON fk_category_id = category_id
       WHERE article_id >= 4 ORDER BY article_id ASC
       LIMIT 4
+      `);
+      let [news_widget] = await db.execute(`
+      SELECT article_date, article_title, article_id, article_like_count
+      FROM article 
+      ORDER BY article_like_count DESC LIMIT 4
+      `);
+      let [video_content] = await db.execute(`
+      SELECT image_name, video_link
+      FROM video
+      INNER JOIN image ON fk_video_image_id = image_id
+      LIMIT 5
       `)
-
-
 
 
       db.end();
@@ -262,6 +230,11 @@ module.exports = (app) => {
       INNER JOIN image ON image_id = fk_article_image_id
       GROUP BY category_id`
       );
+      let [news_widget] = await db.execute(`
+      SELECT article_date, article_title, article_id, article_like_count
+      FROM article 
+      ORDER BY article_like_count DESC LIMIT 4
+      `);
       db.end();
       res.render('categories', { // så hentes filen ved navn categories og vises.
          "latestPostWidgetData": latest_post_widget,
@@ -296,6 +269,11 @@ module.exports = (app) => {
       INNER JOIN image ON image_id = fk_article_image_id
       GROUP BY category_id`
       );
+      let [news_widget] = await db.execute(`
+      SELECT article_date, article_title, article_id, article_like_count
+      FROM article 
+      ORDER BY article_like_count DESC LIMIT 4
+      `);
       db.end();
       res.render('single-article', {
          "latestPostWidgetData": latest_post_widget,

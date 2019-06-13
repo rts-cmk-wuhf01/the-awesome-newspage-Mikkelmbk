@@ -5,11 +5,10 @@
 
     <!-- Single Popular Blog -->
     <% newsWidgetData.forEach((WidgetData, index)=>{
-    let d = new Date(WidgetData.newsWidgetDate); %>
+    let d = new Date(WidgetData.article_date); %>
         <div class="single-popular-post">
-                <a href="#">
-                    <h6><span><%= index+1 %>.</span>Amet, consectetur adipiscing elit. Nam eu metus sit amet odio
-                        sodales.</h6>
+                <a href="/single-article/<%=WidgetData.article_id%>">
+                    <h6><span><%= index+1 %>.</span><%=WidgetData.article_title%></h6>
                 </a>
                 <p><%= dateAndTime.format(d,'MMMM DD YYYY')%></p>
             </div>
