@@ -43,33 +43,7 @@ module.exports = (app) => {
       "autos": "Autos",
       "luxury": "Luxury"
    }
-   const single_article_comment_area = [
-      {
-         "author": "Tim-Othy",
-         "image": "30.jpg",
-         "date": "April 15, 2018",
-         "commentText": "Donec turpis erat, scelerisque id euismod sit amet, fermentum vel dolor. Nulla facilisi. Sed"
-      },
-      {
-         "author": "A-aron",
-         "image": "30.jpg",
-         "date": "April 15, 2018",
-         "commentText": "Donec turpis erat, scelerisque id euismod sit amet, fermentum vel dolor. Nulla facilisi. Sed"
-      },
-      {
-         "author": "B-LAKE",
-         "image": "31.jpg",
-         "date": "April 15, 2018",
-         "commentText": "Donec turpis erat, scelerisque id euismod sit amet, fermentum vel dolor. Nulla facilisi. Sed"
-      },
-      {
-         "author": "DEE-NICE",
-         "image": "32.jpg",
-         "date": "April 15, 2018",
-         "commentText": "Donec turpis erat, scelerisque id euismod sit amet, fermentum vel dolor. Nulla facilisi. Sed"
-      },
-   ]
-
+ 
    app.get('/database/:category_id', async (req, res, next) => {
       let db = await mysql.connect();
       let [articles] = await db.execute('SELECT * FROM article');
@@ -171,7 +145,7 @@ module.exports = (app) => {
    app.get('/categories/:category_id', async (req, res, next) => { // når der står /categories i url'en
       let db = await mysql.connect();
       let [articles] = await db.execute(`
-      SELECT image_name, category_title, article_title, author_name, article_like_count, article_comment_count, article_content, article_id
+      SELECT image_name, category_title, article_title, author_name, article_like_count, article_comment_count, article_content, article_id, category_id
       FROM article
       INNER JOIN image ON fk_article_image_id = image_id
       INNER JOIN categories ON fk_category_id = category_id
@@ -214,7 +188,7 @@ module.exports = (app) => {
    app.get('/single-article/:article_id', async (req, res, next) => {
       let db = await mysql.connect();
       let [article] = await db.execute(`
-      SELECT image_name, category_title, article_title, author_name, author_description, article_like_count, article_comment_count, article_content, author_title
+      SELECT image_name, category_title, article_title, author_name, author_description, article_like_count, article_comment_count, article_content, author_title, category_id
       FROM article
       INNER JOIN image ON fk_article_image_id = image_id
       INNER JOIN categories ON fk_category_id = category_id
@@ -238,6 +212,21 @@ module.exports = (app) => {
       SELECT contact_mail, contact_phone, contact_website
       FROM contact
       `);
+      let [related_single_article] = await db.execute(`
+      SELECT image_name, category_title, category_id, article_title, article_comment_count, article_like_count, article_id
+      FROM article
+      INNER JOIN image ON fk_article_image_id = image_id
+      INNER JOIN categories ON fk_category_id = category_id
+      WHERE article_id >= 2
+      LIMIT 2
+      `);
+      let [single_article_comment_area] = await db.execute(`
+      SELECT image_name, user_name, comment_timestamp, comment_message
+      FROM user
+      INNER JOIN image ON fk_user_image_id = image_id
+      INNER JOIN comments ON fk_user_id = user_id
+      WHERE fk_article_id = ?`, [req.params.article_id]);
+
       db.end();
       res.render('single-article', {
          "latestPostWidgetData": latest_post_widget,
@@ -249,7 +238,8 @@ module.exports = (app) => {
          "footerFAQWidgetData": footer_fAQ_widget,
          "footerMoreWidgetData": footer_more_widget,
          "singleArticleCommentAreaData": single_article_comment_area,
-         "navigationCategoryData":categories
+         "navigationCategoryData":categories,
+         "relatedSingleArticles":related_single_article
       });
    });
 
@@ -261,6 +251,18 @@ module.exports = (app) => {
       SELECT contact_mail, contact_phone, contact_website
       FROM contact
       `);
+      let [about_us_intro] = await db.execute(`
+      SELECT article_content, article_title
+      FROM article
+      LIMIT 1
+      `);
+      let [about_us_employees] = await db.execute(`
+      SELECT image_name, author_name, author_title
+      FROM article
+      INNER JOIN image ON fk_article_image_id = image_id
+      INNER JOIN author ON fk_author_id = author_id
+      LIMIT 8
+      `)
       db.end();
       res.render('about-us', {
          "footerContactWidgetData": footer_contact_widget[0],
@@ -268,7 +270,9 @@ module.exports = (app) => {
          "footerFeaturedWidgetData": footer_featured_widget,
          "footerFAQWidgetData": footer_fAQ_widget,
          "footerMoreWidgetData": footer_more_widget,
-         "navigationCategoryData":categories
+         "navigationCategoryData":categories,
+         "aboutUsIntroData":about_us_intro[0],
+         "aboutUsEmployeesData":about_us_employees
       });
    });
 
