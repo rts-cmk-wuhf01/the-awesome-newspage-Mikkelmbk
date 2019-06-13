@@ -9,9 +9,11 @@
 
                             <%if(typeof footerContactWidgetData != 'undefined'){  %>
                             <ul class="list">
-                            <% footerContactWidgetData.contact.forEach((contactInfo)=>{ %>
-                                <li><a href="<%=contactInfo%>"><%=contactInfo%></a></li>
-                                <%})%>
+            
+                                <li><a href="<%=footerContactWidgetData.contact_mail%>"><%=footerContactWidgetData.contact_mail%></a></li>
+                                <li><a href="<%=footerContactWidgetData.contact_phone%>"><%=footerContactWidgetData.contact_phone%></a></li>
+                                <li><a href="<%=footerContactWidgetData.contact_website%>"><%=footerContactWidgetData.contact_website%></a></li>
+                                
 
                             </ul>
                              

@@ -3,73 +3,8 @@ const mysql = require('../config/mysql');
 module.exports = (app) => {
 
 
-   const editorial_main_post = [
-      {
-         "image": "1.jpg",
-         "textContent": "Orci varius natoque penatibus et magnis dis parturient montes.",
-         "date": "February 11, 2018"
-      },
-      {
-         "image": "2.jpg",
-         "textContent": "Orci varius natoque penatibus et magnis dis parturient montes.",
-         "date": "February 11, 2018"
-      },
-      {
-         "image": "3.jpg",
-         "textContent": "Orci varius natoque penatibus et magnis dis parturient montes.",
-         "date": "February 11, 2018"
-      },
-      {
-         "image": "4.jpg",
-         "textContent": "Orci varius natoque penatibus et magnis dis parturient montes.",
-         "date": "February 11, 2018"
-      },
-      {
-         "image": "5.jpg",
-         "textContent": "Orci varius natoque penatibus et magnis dis parturient montes.",
-         "date": "February 11, 2018"
-      },
-      {
-         "image": "6.jpg",
-         "textContent": "Orci varius natoque penatibus et magnis dis parturient montes.",
-         "date": "February 11, 2018"
-      }
-   ]
-   const editorial_single_post = [
-      {
-         "image": "7.jpg",
-         "textContent": "Orci varius natoque penatibus et magnis",
-         "date": "February 11, 2018"
-      },
-      {
-         "image": "8.jpg",
-         "textContent": "Orci varius natoque penatibus et magnis",
-         "date": "February 11, 2018"
-      },
-      {
-         "image": "9.jpg",
-         "textContent": "Orci varius natoque penatibus et magnis",
-         "date": "February 11, 2018"
-      },
-      {
-         "image": "10.jpg",
-         "textContent": "Orci varius natoque penatibus et magnis",
-         "date": "February 11, 2018"
-      },
-      {
-         "image": "11.jpg",
-         "textContent": "Orci varius natoque penatibus et magnis",
-         "date": "February 11, 2018"
-      }
-   ]
 
-   const footer_contact_widget = { 
-      "contact":[
-         "contact@youremail.com",
-         "+43 5278 2883 884",
-         "www.yoursitename.com"
-      ]
-   }
+
    const footer_politics_widget = {
       "title": "Politics",
       "business": "Business",
@@ -187,21 +122,39 @@ module.exports = (app) => {
       FROM video
       INNER JOIN image ON fk_video_image_id = image_id
       LIMIT 5
-      `)
+      `);
+      let [editorial_main_post] = await db.execute(`
+      SELECT image_name, article_title, article_date, article_id
+      FROM article
+      INNER JOIN image ON fk_article_image_id = image_id
+      ORDER BY image_id ASC
+      LIMIT 6
+      `);
+      let [editorial_single_post] = await db.execute(`
+      SELECT image_name, article_title, article_date, article_id
+      FROM article
+      INNER JOIN image ON fk_article_image_id = image_id
+      ORDER BY article_date ASC
+      LIMIT 5
+      `);
+      let [footer_contact_widget] = await db.execute(`
+      SELECT contact_mail, contact_phone, contact_website
+      FROM contact
+      `);
 
 
       db.end();
 
       res.render('home', {
          "latestPostWidgetData": latest_post_widget,
-         "largeFeaturedPostData":large_featured_post[0],
+         "largeFeaturedPostData":large_featured_post[0],// Når man modtager data fra en database er det ALTID et array, så hvis der kun er 1 objekt i det og man IKKE har tænkt sig at forEache, så SKAL man huske at skrive Index 0 så den er klar over at det er præcist det objekt du vil have fat i.
          "mediumFeaturedPostData":medium_featured_post,
          "newsSinglePostData": news_single_post,
          "newsWidgetData": news_widget,
          "videoData": video_content,
          "editorialMainPostData": editorial_main_post,
          "editorialSinglePostData": editorial_single_post,
-         "footerContactWidgetData": footer_contact_widget,
+         "footerContactWidgetData": footer_contact_widget[0], // Når man modtager data fra en database er det ALTID et array, så hvis der kun er 1 objekt i det og man IKKE har tænkt sig at forEache, så SKAL man huske at skrive Index 0 så den er klar over at det er præcist det objekt du vil have fat i.
          "footerPoliticsWidgetData": footer_politics_widget,
          "footerFeaturedWidgetData": footer_featured_widget,
          "footerFAQWidgetData": footer_fAQ_widget,
@@ -235,11 +188,15 @@ module.exports = (app) => {
       FROM article 
       ORDER BY article_like_count DESC LIMIT 4
       `);
+      let [footer_contact_widget] = await db.execute(`
+      SELECT contact_mail, contact_phone, contact_website
+      FROM contact
+      `);
       db.end();
       res.render('categories', { // så hentes filen ved navn categories og vises.
          "latestPostWidgetData": latest_post_widget,
          "newsWidgetData": news_widget,
-         "footerContactWidgetData": footer_contact_widget,
+         "footerContactWidgetData": footer_contact_widget[0],
          "footerPoliticsWidgetData": footer_politics_widget,
          "footerFeaturedWidgetData": footer_featured_widget,
          "footerFAQWidgetData": footer_fAQ_widget,
@@ -274,12 +231,16 @@ module.exports = (app) => {
       FROM article 
       ORDER BY article_like_count DESC LIMIT 4
       `);
+      let [footer_contact_widget] = await db.execute(`
+      SELECT contact_mail, contact_phone, contact_website
+      FROM contact
+      `);
       db.end();
       res.render('single-article', {
          "latestPostWidgetData": latest_post_widget,
          "singleArticleData":article[0],
          "newsWidgetData": news_widget,
-         "footerContactWidgetData": footer_contact_widget,
+         "footerContactWidgetData": footer_contact_widget[0],
          "footerPoliticsWidgetData": footer_politics_widget,
          "footerFeaturedWidgetData": footer_featured_widget,
          "footerFAQWidgetData": footer_fAQ_widget,
@@ -293,9 +254,13 @@ module.exports = (app) => {
       let db = await mysql.connect();
       let [articles] = await db.execute('SELECT * FROM article');
       let [categories] = await db.execute('SELECT category_title, category_id FROM categories');
+      let [footer_contact_widget] = await db.execute(`
+      SELECT contact_mail, contact_phone, contact_website
+      FROM contact
+      `);
       db.end();
       res.render('about-us', {
-         "footerContactWidgetData": footer_contact_widget,
+         "footerContactWidgetData": footer_contact_widget[0],
          "footerPoliticsWidgetData": footer_politics_widget,
          "footerFeaturedWidgetData": footer_featured_widget,
          "footerFAQWidgetData": footer_fAQ_widget,
@@ -308,9 +273,13 @@ module.exports = (app) => {
       let db = await mysql.connect();
       let [articles] = await db.execute('SELECT * FROM article');
       let [categories] = await db.execute('SELECT category_title, category_id FROM categories');
+      let [footer_contact_widget] = await db.execute(`
+      SELECT contact_mail, contact_phone, contact_website
+      FROM contact
+      `);
       db.end();
       res.render('contact', {
-         "footerContactWidgetData": footer_contact_widget,
+         "footerContactWidgetData": footer_contact_widget[0],
          "footerPoliticsWidgetData": footer_politics_widget,
          "footerFeaturedWidgetData": footer_featured_widget,
          "footerFAQWidgetData": footer_fAQ_widget,

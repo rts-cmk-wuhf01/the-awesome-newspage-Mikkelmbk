@@ -1,15 +1,15 @@
 <!-- Single Post -->
                         <%if(typeof editorialMainPostData != 'undefined'){  %>
                         <% editorialMainPostData.forEach((editorialMainData)=>{
-                            let d = new Date(editorialMainData.date) %>
+                            let d = new Date(editorialMainData.article_date) %>
                         <div class="col-12 col-lg-4">
                             <div class="single-blog-post">
                                 <div class="post-thumb">
-                                    <a href="#"><img src="/img/bg-img/<%=editorialMainData.image%>" alt=""></a>
+                                    <a href="/single-article/<%=editorialMainData.article_id%>"><img src="/img/bg-img/<%=editorialMainData.image_name%>" alt=""></a>
                                 </div>
                                 <div class="post-data">
-                                    <a href="#" class="post-title">
-                                        <h6><%=editorialMainData.textContent%></h6>
+                                    <a href="/single-article/<%=editorialMainData.article_id%>" class="post-title">
+                                        <h6><%=editorialMainData.article_title%></h6>
                                     </a>
                                     <div class="post-meta">
                                         <div class="post-date"><a href="#"><%=dateAndTime.format(d,' MMMM DD, YYYY')%></a></div>
