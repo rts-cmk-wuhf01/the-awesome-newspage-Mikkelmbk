@@ -104,41 +104,30 @@
                                                 <li><a href="/contact">Contact</a></li>
                                             </ul>
                                             <div class="single-mega cn-col-4">
-                                                <!-- Single Featured Post -->
-                                                <div class="single-blog-post small-featured-post d-flex">
-                                                    <div class="post-thumb">
-                                                        <a href="#"><img src="/img/bg-img/23.jpg" alt=""></a>
-                                                    </div>
-                                                    <div class="post-data">
-                                                        <a href="#" class="post-catagory">Travel</a>
-                                                        <div class="post-meta">
-                                                            <a href="#" class="post-title">
-                                                                <h6>Pellentesque mattis arcu massa, nec fringilla turpis
-                                                                    eleifend id.</h6>
-                                                            </a>
-                                                            <p class="post-date"><span>7:00 AM</span> | <span>April
-                                                                    14</span></p>
-                                                        </div>
-                                                    </div>
-                                                </div>
+
+
 
                                                 <!-- Single Featured Post -->
+                                                <%if(typeof megaMenuArticlesData != 'undefined'){  %>
+                                                <% megaMenuArticlesData.forEach((megaMenuArticleData)=>{
+                                                let d = new Date(megaMenuArticleData.article_date) %>
                                                 <div class="single-blog-post small-featured-post d-flex">
                                                     <div class="post-thumb">
-                                                        <a href="#"><img src="/img/bg-img/24.jpg" alt=""></a>
+                                                        <a href="/single-article/<%=megaMenuArticleData.article_id%>"><img src="/img/bg-img/<%=megaMenuArticleData.image_name%>" alt=""></a>
                                                     </div>
                                                     <div class="post-data">
-                                                        <a href="#" class="post-catagory">Politics</a>
+                                                        <a href="/categories/<%=megaMenuArticleData.category_id%>" class="post-catagory"><%=megaMenuArticleData.category_title%></a>
                                                         <div class="post-meta">
-                                                            <a href="#" class="post-title">
-                                                                <h6>Augue semper congue sit amet ac sapien. Fusce
-                                                                    consequat.</h6>
+                                                            <a href="/single-article/<%=megaMenuArticleData.article_id%>" class="post-title">
+                                                                <h6><%=megaMenuArticleData.article_title%></h6>
                                                             </a>
-                                                            <p class="post-date"><span>7:00 AM</span> | <span>April
-                                                                    14</span></p>
+                                                            <p class="post-date"><span><%=dateAndTime.format(d,' MMMM DD, YYYY')%></span></p>
                                                         </div>
                                                     </div>
                                                 </div>
+                                                <% }) %>
+                                                <% } %>
+
                                             </div>
                                         </div>
                                     </li>

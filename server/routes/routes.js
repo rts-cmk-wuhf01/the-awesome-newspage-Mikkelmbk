@@ -58,6 +58,7 @@ module.exports = (app) => {
       let [categories] = await db.execute(`
       SELECT category_title, category_id 
       FROM categories
+      LIMIT 8
       `);
       let [latest_post_widget] = await db.execute(`
       SELECT * 
@@ -118,6 +119,14 @@ module.exports = (app) => {
       SELECT contact_mail, contact_phone, contact_website
       FROM contact
       `);
+      let [mega_menu_articles] = await db.execute(`
+      SELECT image_name, article_date, category_title, article_title, article_id, category_id
+      FROM article
+      INNER JOIN image ON fk_article_image_id = image_id
+      INNER JOIN categories ON fk_category_id = category_id
+      ORDER BY article_date ASC
+      LIMIT 2
+      `);
 
 
       db.end();
@@ -136,7 +145,8 @@ module.exports = (app) => {
          "footerFeaturedWidgetData": footer_featured_widget,
          "footerFAQWidgetData": footer_fAQ_widget,
          "footerMoreWidgetData": footer_more_widget,
-         "navigationCategoryData":categories
+         "navigationCategoryData":categories,
+         "megaMenuArticlesData":mega_menu_articles
       });
    });
 
@@ -169,8 +179,24 @@ module.exports = (app) => {
       SELECT contact_mail, contact_phone, contact_website
       FROM contact
       `);
+      let [mega_menu_articles] = await db.execute(`
+      SELECT image_name, article_date, category_title, article_title, article_id, category_id
+      FROM article
+      INNER JOIN image ON fk_article_image_id = image_id
+      INNER JOIN categories ON fk_category_id = category_id
+      ORDER BY article_date ASC
+      LIMIT 2
+      `);
+      let [latest_comments_widget] = await db.execute(`
+      SELECT image_name, user_name, article_title, article_date, article_id
+      FROM article
+      INNER JOIN image ON fk_article_image_id = image_id
+      INNER JOIN user ON fk_user_id = user_id
+      ORDER BY article_date
+      LIMIT 4
+      `);
       db.end();
-      res.render('categories', { // så hentes filen ved navn categories og vises.
+      res.render('categories', { // så hentes filen ved navn categories og vises. (kommentar del af linje 155 kommentar)
          "latestPostWidgetData": latest_post_widget,
          "newsWidgetData": news_widget,
          "footerContactWidgetData": footer_contact_widget[0],
@@ -179,8 +205,9 @@ module.exports = (app) => {
          "footerFAQWidgetData": footer_fAQ_widget,
          "footerMoreWidgetData": footer_more_widget,
          "navigationCategoryData":categories,
-         "articlesData":articles
-
+         "articlesData":articles,
+         "megaMenuArticlesData":mega_menu_articles,
+         "latestCommentsWidgetData":latest_comments_widget
 
       });
    });
@@ -227,6 +254,23 @@ module.exports = (app) => {
       INNER JOIN comments ON fk_user_id = user_id
       WHERE fk_article_id = ?`, [req.params.article_id]);
 
+      let [mega_menu_articles] = await db.execute(`
+      SELECT image_name, article_date, category_title, article_title, article_id, category_id
+      FROM article
+      INNER JOIN image ON fk_article_image_id = image_id
+      INNER JOIN categories ON fk_category_id = category_id
+      ORDER BY article_date ASC
+      LIMIT 2
+      `);
+      let [latest_comments_widget] = await db.execute(`
+      SELECT image_name, user_name, article_title, article_date, article_id
+      FROM article
+      INNER JOIN image ON fk_article_image_id = image_id
+      INNER JOIN user ON fk_user_id = user_id
+      ORDER BY article_date
+      LIMIT 4
+      `);
+
       db.end();
       res.render('single-article', {
          "latestPostWidgetData": latest_post_widget,
@@ -239,13 +283,14 @@ module.exports = (app) => {
          "footerMoreWidgetData": footer_more_widget,
          "singleArticleCommentAreaData": single_article_comment_area,
          "navigationCategoryData":categories,
-         "relatedSingleArticles":related_single_article
+         "relatedSingleArticles":related_single_article,
+         "megaMenuArticlesData":mega_menu_articles,
+         "latestCommentsWidgetData":latest_comments_widget
       });
    });
 
    app.get('/about-us', async (req, res, next) => {
       let db = await mysql.connect();
-      let [articles] = await db.execute('SELECT * FROM article');
       let [categories] = await db.execute('SELECT category_title, category_id FROM categories');
       let [footer_contact_widget] = await db.execute(`
       SELECT contact_mail, contact_phone, contact_website
@@ -262,7 +307,15 @@ module.exports = (app) => {
       INNER JOIN image ON fk_article_image_id = image_id
       INNER JOIN author ON fk_author_id = author_id
       LIMIT 8
-      `)
+      `);
+      let [mega_menu_articles] = await db.execute(`
+      SELECT image_name, article_date, category_title, article_title, article_id, category_id
+      FROM article
+      INNER JOIN image ON fk_article_image_id = image_id
+      INNER JOIN categories ON fk_category_id = category_id
+      ORDER BY article_date ASC
+      LIMIT 2
+      `);
       db.end();
       res.render('about-us', {
          "footerContactWidgetData": footer_contact_widget[0],
@@ -272,17 +325,25 @@ module.exports = (app) => {
          "footerMoreWidgetData": footer_more_widget,
          "navigationCategoryData":categories,
          "aboutUsIntroData":about_us_intro[0],
-         "aboutUsEmployeesData":about_us_employees
+         "aboutUsEmployeesData":about_us_employees,
+         "megaMenuArticlesData":mega_menu_articles
       });
    });
 
    app.get('/contact', async (req, res, next) => {
       let db = await mysql.connect();
-      let [articles] = await db.execute('SELECT * FROM article');
       let [categories] = await db.execute('SELECT category_title, category_id FROM categories');
       let [footer_contact_widget] = await db.execute(`
       SELECT contact_mail, contact_phone, contact_website
       FROM contact
+      `);
+      let [mega_menu_articles] = await db.execute(`
+      SELECT image_name, article_date, category_title, article_title, article_id, category_id
+      FROM article
+      INNER JOIN image ON fk_article_image_id = image_id
+      INNER JOIN categories ON fk_category_id = category_id
+      ORDER BY article_date ASC
+      LIMIT 2
       `);
       db.end();
       res.render('contact', {
@@ -291,7 +352,8 @@ module.exports = (app) => {
          "footerFeaturedWidgetData": footer_featured_widget,
          "footerFAQWidgetData": footer_fAQ_widget,
          "footerMoreWidgetData": footer_more_widget,
-         "navigationCategoryData":categories
+         "navigationCategoryData":categories,
+         "megaMenuArticlesData":mega_menu_articles
       });
    });
 
