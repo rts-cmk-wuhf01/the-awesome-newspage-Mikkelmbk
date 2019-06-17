@@ -2,9 +2,6 @@ const mysql = require('../config/mysql');
 
 module.exports = (app) => {
 
-
-
-
    const footer_politics_widget = {
       "title": "Politics",
       "business": "Business",
@@ -44,32 +41,13 @@ module.exports = (app) => {
       "luxury": "Luxury"
    }
 
-   // app.get('/database/:category_id', async (req, res, next) => {
-   //    let db = await mysql.connect();
-   //    let [articles] = await db.execute('SELECT * FROM article');
-   //    let [test] = await db.execute('SELECT * FROM article WHERE fk_category_id = ?', [req.params.category_id]);
-   //    db.end();
-
-   // });
-
-
-
-
-
    app.get('/', async (req, res, next) => {
       let db = await mysql.connect();
-      let [categories] = await db.execute(`
-      SELECT category_title, category_id 
-      FROM categories
-      LIMIT 8
-      `);
-      let [latest_post_widget] = await db.execute(`
-      SELECT * 
-      FROM categories 
-      INNER JOIN article ON fk_category_id = category_id
-      INNER JOIN image ON image_id = fk_article_image_id
-      GROUP BY category_id`
-      );
+      
+      let categories = await getCategoriesWithLimit(db);
+
+      let latest_post_widget = await getLatestPostWidgets(db);
+
       let [large_featured_post] = await db.execute(`
       SELECT image_name, category_title, article_title, author_name, article_content, article_comment_count, article_like_count, article_id, category_id
       FROM article
@@ -77,6 +55,7 @@ module.exports = (app) => {
       INNER JOIN categories ON fk_category_id = category_id
       INNER JOIN author ON fk_author_id = author_id
       `);
+
       let [medium_featured_post] = await db.execute(`
       SELECT image_name, category_title, article_title, article_comment_count, article_like_count, article_id, category_id
       FROM article
@@ -93,11 +72,9 @@ module.exports = (app) => {
       WHERE article_id >= 4 ORDER BY article_id ASC
       LIMIT 4
       `);
-      let [news_widget] = await db.execute(`
-      SELECT article_date, article_title, article_id, article_like_count
-      FROM article 
-      ORDER BY article_like_count DESC LIMIT 4
-      `);
+
+      let news_widget = await getNewsWidget(db);
+
       let [video_content] = await db.execute(`
       SELECT image_name, video_link
       FROM video
@@ -118,19 +95,9 @@ module.exports = (app) => {
       ORDER BY article_date ASC
       LIMIT 5
       `);
-      let [footer_contact_widget] = await db.execute(`
-      SELECT contact_mail, contact_phone, contact_website
-      FROM contact
-      `);
-      let [mega_menu_articles] = await db.execute(`
-      SELECT image_name, article_date, category_title, article_title, article_id, category_id
-      FROM article
-      INNER JOIN image ON fk_article_image_id = image_id
-      INNER JOIN categories ON fk_category_id = category_id
-      ORDER BY article_date ASC
-      LIMIT 2
-      `);
+      let footer_contact_widget = await getFooterContactWidget(db);
 
+      let mega_menu_articles = await getMegaMenuArticles(db);
 
       db.end();
 
@@ -153,8 +120,6 @@ module.exports = (app) => {
       });
    });
 
-
-
    app.get('/categories/:category_id', async (req, res, next) => { // når der står /categories i url'en
       let db = await mysql.connect();
       let [articles] = await db.execute(`
@@ -165,39 +130,18 @@ module.exports = (app) => {
       INNER JOIN author ON fk_author_id = author_id
       WHERE fk_category_id = ?`, [req.params.category_id]);
 
-      let [categories] = await db.execute('SELECT category_title, category_id FROM categories');
-      let [latest_post_widget] = await db.execute(`
-      SELECT * 
-      FROM categories 
-      INNER JOIN article ON fk_category_id = category_id
-      INNER JOIN image ON image_id = fk_article_image_id
-      GROUP BY category_id`
-      );
-      let [news_widget] = await db.execute(`
-      SELECT article_date, article_title, article_id, article_like_count
-      FROM article 
-      ORDER BY article_like_count DESC LIMIT 4
-      `);
-      let [footer_contact_widget] = await db.execute(`
-      SELECT contact_mail, contact_phone, contact_website
-      FROM contact
-      `);
-      let [mega_menu_articles] = await db.execute(`
-      SELECT image_name, article_date, category_title, article_title, article_id, category_id
-      FROM article
-      INNER JOIN image ON fk_article_image_id = image_id
-      INNER JOIN categories ON fk_category_id = category_id
-      ORDER BY article_date ASC
-      LIMIT 2
-      `);
-      let [latest_comments_widget] = await db.execute(`
-      SELECT image_name, user_name, article_title, article_date, article_id
-      FROM article
-      INNER JOIN image ON fk_article_image_id = image_id
-      INNER JOIN user ON fk_user_id = user_id
-      ORDER BY article_date
-      LIMIT 4
-      `);
+      let categories = await getCategoriesWithoutLimit(db);
+
+      let latest_post_widget = await getLatestPostWidgets(db);
+
+      let news_widget = await getNewsWidget(db);
+
+      let footer_contact_widget = await getFooterContactWidget(db);
+
+      let mega_menu_articles = await getMegaMenuArticles(db);
+
+      let latest_comments_widget = await getLatestCommentsWidget(db);
+
       db.end();
       res.render('categories', { // så hentes filen ved navn categories og vises. (kommentar del af linje 155 kommentar)
          "latestPostWidgetData": latest_post_widget,
@@ -225,23 +169,14 @@ module.exports = (app) => {
       INNER JOIN author ON fk_author_id = author_id
       WHERE article_id = ?`, [req.params.article_id]);
 
-      let [categories] = await db.execute('SELECT category_title, category_id FROM categories');
-      let [latest_post_widget] = await db.execute(`
-      SELECT * 
-      FROM categories 
-      INNER JOIN article ON fk_category_id = category_id
-      INNER JOIN image ON image_id = fk_article_image_id
-      GROUP BY category_id`
-      );
-      let [news_widget] = await db.execute(`
-      SELECT article_date, article_title, article_id, article_like_count
-      FROM article 
-      ORDER BY article_like_count DESC LIMIT 4
-      `);
-      let [footer_contact_widget] = await db.execute(`
-      SELECT contact_mail, contact_phone, contact_website
-      FROM contact
-      `);
+      let categories = await getCategoriesWithoutLimit(db);
+      
+      let latest_post_widget = await getLatestPostWidgets(db);
+
+      let news_widget = await getNewsWidget(db);
+
+      let footer_contact_widget = await getFooterContactWidget(db);
+
       let [related_single_article] = await db.execute(`
       SELECT image_name, category_title, category_id, article_title, article_comment_count, article_like_count, article_id
       FROM article
@@ -257,24 +192,12 @@ module.exports = (app) => {
       INNER JOIN comments ON fk_user_id = user_id
       WHERE fk_article_id = ?`, [req.params.article_id]);
 
-      let [mega_menu_articles] = await db.execute(`
-      SELECT image_name, article_date, category_title, article_title, article_id, category_id
-      FROM article
-      INNER JOIN image ON fk_article_image_id = image_id
-      INNER JOIN categories ON fk_category_id = category_id
-      ORDER BY article_date ASC
-      LIMIT 2
-      `);
-      let [latest_comments_widget] = await db.execute(`
-      SELECT image_name, user_name, article_title, article_date, article_id
-      FROM article
-      INNER JOIN image ON fk_article_image_id = image_id
-      INNER JOIN user ON fk_user_id = user_id
-      ORDER BY article_date
-      LIMIT 4
-      `);
+      let mega_menu_articles = await getMegaMenuArticles(db);
+
+      let latest_comments_widget = await getLatestCommentsWidget(db)
 
       db.end();
+      
       res.render('single-article', {
          "latestPostWidgetData": latest_post_widget,
          "singleArticleData": article[0],
@@ -294,11 +217,11 @@ module.exports = (app) => {
 
    app.get('/about-us', async (req, res, next) => {
       let db = await mysql.connect();
-      let [categories] = await db.execute('SELECT category_title, category_id FROM categories');
-      let [footer_contact_widget] = await db.execute(`
-      SELECT contact_mail, contact_phone, contact_website
-      FROM contact
-      `);
+
+      let categories = await getCategoriesWithoutLimit(db);
+
+      let footer_contact_widget = await getFooterContactWidget(db);
+
       let [about_us_intro] = await db.execute(`
       SELECT article_content, article_title
       FROM article
@@ -311,14 +234,9 @@ module.exports = (app) => {
       INNER JOIN author ON fk_author_id = author_id
       LIMIT 8
       `);
-      let [mega_menu_articles] = await db.execute(`
-      SELECT image_name, article_date, category_title, article_title, article_id, category_id
-      FROM article
-      INNER JOIN image ON fk_article_image_id = image_id
-      INNER JOIN categories ON fk_category_id = category_id
-      ORDER BY article_date ASC
-      LIMIT 2
-      `);
+
+      let mega_menu_articles = await getMegaMenuArticles(db);
+
       db.end();
       res.render('about-us', {
          "footerContactWidgetData": footer_contact_widget[0],
@@ -335,19 +253,12 @@ module.exports = (app) => {
 
    app.get('/contact', async (req, res, next) => {
       let db = await mysql.connect();
-      let [categories] = await db.execute('SELECT category_title, category_id FROM categories');
-      let [footer_contact_widget] = await db.execute(`
-      SELECT contact_mail, contact_phone, contact_website
-      FROM contact
-      `);
-      let [mega_menu_articles] = await db.execute(`
-      SELECT image_name, article_date, category_title, article_title, article_id, category_id
-      FROM article
-      INNER JOIN image ON fk_article_image_id = image_id
-      INNER JOIN categories ON fk_category_id = category_id
-      ORDER BY article_date ASC
-      LIMIT 2
-      `);
+      let categories = await getCategoriesWithoutLimit(db);
+
+      let footer_contact_widget = await getFooterContactWidget(db);
+
+      let mega_menu_articles = await getMegaMenuArticles(db);
+
       db.end();
       let return_message = ""
 
@@ -367,7 +278,6 @@ module.exports = (app) => {
                                              // return_message har intet med return_message i app.post routet at gøre.
       });
    });
-
 
    app.post('/contact', async (req, res, next) => {
 
@@ -397,19 +307,12 @@ module.exports = (app) => {
 
       if (return_message.length > 0) { // hvis arrayet return_message's længde er større end 0
          let db = await mysql.connect();
-         let [categories] = await db.execute('SELECT category_title, category_id FROM categories');
-         let [footer_contact_widget] = await db.execute(`
-      SELECT contact_mail, contact_phone, contact_website
-      FROM contact
-      `);
-         let [mega_menu_articles] = await db.execute(`
-      SELECT image_name, article_date, category_title, article_title, article_id, category_id
-      FROM article
-      INNER JOIN image ON fk_article_image_id = image_id
-      INNER JOIN categories ON fk_category_id = category_id
-      ORDER BY article_date ASC
-      LIMIT 2
-      `);
+         let categories = await getCategoriesWithoutLimit(db);
+
+         let footer_contact_widget = await getFooterContactWidget(db);
+
+         let mega_menu_articles = await getMegaMenuArticles(db);
+
          db.end();
          res.render('contact', {
             "footerContactWidgetData": footer_contact_widget[0],
@@ -423,26 +326,16 @@ module.exports = (app) => {
             "valuesData": req.body // er en del af body-parser modulet, body her har intet med html body tagget at gøre.
          });
 
-
       }
       else {
 
-         return_message = "Tak for beskeden, den er modtaget"
+         return_message = "Tak for din Besked vi vender tilbage hurtigst muligt";
          let db = await mysql.connect();
-         let [categories] = await db.execute('SELECT category_title, category_id FROM categories');
-         let [footer_contact_widget] = await db.execute(`
-         SELECT contact_mail, contact_phone, contact_website
-         FROM contact
-         `);
+         let categories = await getCategoriesWithoutLimit(db);
 
-         let [mega_menu_articles] = await db.execute(`
-         SELECT image_name, article_date, category_title, article_title, article_id, category_id
-         FROM article
-         INNER JOIN image ON fk_article_image_id = image_id
-         INNER JOIN categories ON fk_category_id = category_id
-         ORDER BY article_date ASC
-         LIMIT 2
-         `);
+         let footer_contact_widget = await getFooterContactWidget(db);
+
+         let mega_menu_articles = await getMegaMenuArticles(db);
 
          let result = await db.execute(`
          INSERT INTO modtaget_data 
@@ -471,11 +364,73 @@ module.exports = (app) => {
          }
          db.end();
 
-
-
-
       }
 
    });
+
+   async function getCategoriesWithoutLimit(db){
+      let [categories] = await db.execute('SELECT category_title, category_id FROM categories');
+      return categories
+   };
+
+   async function getCategoriesWithLimit(db){
+      let [categories] = await db.execute(`
+      SELECT category_title, category_id 
+      FROM categories
+      LIMIT 8`);
+      return categories
+   };
+
+   async function getLatestPostWidgets(db){
+      let [latest_post_widget] = await db.execute(`
+      SELECT * 
+      FROM categories 
+      INNER JOIN article ON fk_category_id = category_id
+      INNER JOIN image ON image_id = fk_article_image_id
+      GROUP BY category_id`
+      );
+      return latest_post_widget
+   };
+
+   async function getNewsWidget(db){
+      let [news_widget] = await db.execute(`
+      SELECT article_date, article_title, article_id, article_like_count
+      FROM article 
+      ORDER BY article_like_count DESC LIMIT 4
+      `);
+      return news_widget;
+   }
+
+   async function getFooterContactWidget(db){
+      let [footer_contact_widget] = await db.execute(`
+      SELECT contact_mail, contact_phone, contact_website
+      FROM contact
+      `);
+      return footer_contact_widget;
+   };
+
+   async function getMegaMenuArticles(db){
+      let [mega_menu_articles] = await db.execute(`
+      SELECT image_name, article_date, category_title, article_title, article_id, category_id
+      FROM article
+      INNER JOIN image ON fk_article_image_id = image_id
+      INNER JOIN categories ON fk_category_id = category_id
+      ORDER BY article_date ASC
+      LIMIT 2
+      `);
+      return mega_menu_articles;
+   };
+
+   async function getLatestCommentsWidget(db){
+      let [latest_comments_widget] = await db.execute(`
+      SELECT image_name, user_name, article_title, article_date, article_id
+      FROM article
+      INNER JOIN image ON fk_article_image_id = image_id
+      INNER JOIN user ON fk_user_id = user_id
+      ORDER BY article_date
+      LIMIT 4
+      `);
+      return latest_comments_widget;
+   };
 
 };
