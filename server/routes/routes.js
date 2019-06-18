@@ -143,7 +143,7 @@ module.exports = (app) => {
       let latest_comments_widget = await getLatestCommentsWidget(db);
 
       db.end();
-      res.render('categories', { // så hentes filen ved navn categories og vises. (kommentar del af linje 155 kommentar)
+      res.render('categories', { // så hentes filen ved navn categories og vises. (kommentar del af /categories/:category_id kommentar)
          "latestPostWidgetData": latest_post_widget,
          "newsWidgetData": news_widget,
          "footerContactWidgetData": footer_contact_widget[0],
@@ -347,6 +347,7 @@ module.exports = (app) => {
          modtaget_data_date = ?`, [name, email, subject, message, contactDate]);
 
          if (result[0].affectedRows > 0) { // hvis der er mere end 1 række der er blevet påvirket i databasen (altså at den har modtaget noget) så kør if statement koden
+            // console.log(affectedRows);
             res.redirect('/contact?success'); // omdirriger til /contact siden men med ?success på.
          }
          else {
@@ -427,7 +428,7 @@ module.exports = (app) => {
       FROM article
       INNER JOIN image ON fk_article_image_id = image_id
       INNER JOIN user ON fk_user_id = user_id
-      ORDER BY article_date
+      ORDER BY article_date ASC
       LIMIT 4
       `);
       return latest_comments_widget;
