@@ -101,7 +101,7 @@ module.exports = (app) => {
 
       db.end();
 
-      res.render('home', {
+      res.render('home', { // render er en metode der ligger i objektet res.
          "latestPostWidgetData": latest_post_widget,
          "largeFeaturedPostData": large_featured_post[0],// Når man modtager data fra en database er det ALTID et array, så hvis der kun er 1 objekt i det og man IKKE har tænkt sig at forEache, så SKAL man huske at skrive Index 0 så den er klar over at det er præcist det objekt du vil have fat i.
          "mediumFeaturedPostData": medium_featured_post,
