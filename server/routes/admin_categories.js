@@ -80,6 +80,10 @@ module.exports = app => {
 	})
   });
 
+  app.post("/admin/categories/edit/:category_id", async (req, res, next) => {
+	
+  });
+
 
   async function getCategoriesWithoutLimit(){
 	let db = await mysql.connect();
