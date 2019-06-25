@@ -5,7 +5,7 @@ module.exports = app => {
 
    // her placeres alle de routes administrations panelet har brug for 
 
-   app.get("/admin_categories", async (req, res, next) => {
+   app.get("/admin/categories", async (req, res, next) => {
 	let categories = await getCategoriesWithoutLimit();
 	res.render('admin_categories',{
 		'categoriesData':categories
@@ -13,7 +13,7 @@ module.exports = app => {
   });
 
 
-  app.post("/admin_categories", async (req, res, next) => {
+  app.post("/admin/categories", async (req, res, next) => {
 
 
 		
@@ -45,7 +45,7 @@ module.exports = app => {
 		   let categories = await getCategoriesWithoutLimit();
   
 		   let result = await db.execute(`
-			INSERT INTO categories 
+			INSERT INTO categories
 			SET
 			category_title = ?`,
 			[title]);
@@ -64,6 +64,20 @@ module.exports = app => {
 		   db.end();
   
 		}
+  });
+
+  app.get("/admin/categories/edit/:category_id", async (req, res, next)=> {
+	let categories = await getCategoriesWithoutLimit();
+	let db = await mysql.connect();
+	let [category] = await db.execute(`
+	SELECT category_title, category_id FROM categories
+	WHERE category_id = ?`, [req.params.category_id]);
+	db.end();
+
+	res.render('admin_categories',{
+		"categoriesData":categories,
+		"categoryData":category[0]
+	})
   });
 
 
